@@ -17,23 +17,23 @@ class Script {
   }
 
   public function getName() {
-    return $this->name;
+    return htmlspecialchars($this->name, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getDescription() {
-    return $this->description;
+    return htmlspecialchars($this->description, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getLanguage() {
-    return $this->language;
+    return htmlspecialchars($this->language, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getAuthor() {
-    $this->author;
+    return htmlspecialchars($this->author, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getUrl() {
-    return $this->url;
+    return htmlspecialchars($this->url, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function setName($name) {
