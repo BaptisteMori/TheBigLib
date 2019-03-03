@@ -10,8 +10,12 @@ class Router{
       $view = new View($this);
       $control = new Controller($view,$scriptStorage);
 
-      $view->makeHomePage();
-
+      if(!key_exists('PATH_INFO',$_SERVER)) {
+        $view->makeHomePage();
+      }
+      if(key_exists('PATH_INFO',$_SERVER) && $_SERVER['PATH_INFO']==='/save') {
+        $view->makeDebugPage("salut");
+      }
       $view->render();
     } catch (Exception $e){
       $view->makeDebugPage($e);
@@ -20,6 +24,10 @@ class Router{
   }
 
   public function getUrl(){
-    return "http://thebiglib/";
+    return "http://thebiglib/thebiglib.php/";
+  }
+
+  public function getUrlSaveScript(){
+    return getUrl()."save";
   }
 }

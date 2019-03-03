@@ -37,11 +37,11 @@ class Author {
   }
 
   public function setEmail($email) {
-    $this->email=$email;
+    $this->email=htmlspecialchars($email);
   }
 
   public function setDescription($description) {
-    $this->description=$description;
+    $this->description=htmlspecialchars($description);
   }
 }
 
