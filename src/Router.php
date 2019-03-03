@@ -14,7 +14,7 @@ class Router{
         $view->makeHomePage();
       }
       if(key_exists('PATH_INFO',$_SERVER) && $_SERVER['PATH_INFO']==='/save') {
-        $view->makeDebugPage("salut");
+        $control->newScript();
       }
       $view->render();
     } catch (Exception $e){
@@ -28,6 +28,6 @@ class Router{
   }
 
   public function getUrlSaveScript(){
-    return getUrl()."save";
+    return $this->getUrl()."save";
   }
 }

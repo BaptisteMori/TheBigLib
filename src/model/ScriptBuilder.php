@@ -1,7 +1,7 @@
 <?php
 require_once("model/Script.php");
 
-class ScrpitBuilder{
+class ScriptBuilder{
 
   const NAME_REF="name";
   const DESCRIPTION_REF="description";
@@ -34,7 +34,7 @@ class ScrpitBuilder{
 
     if($this->data[$this::NAME_REF]!==htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8')){
       $this->error[$this::NAME_REF]="votre nom de srcipt contené des caractères spéciaux, voici une version sans eux";
-      $this->data[$this::NAME_REF]=htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8')
+      $this->data[$this::NAME_REF]=htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
     }elseif($this->data[$this::NAME_REF]==""){
       $this->error[$this::NAME_REF]="Votre nom de script est incomplet";
     }elseif (strlen($this->data[$this::NAME_REF])<7) {
@@ -61,6 +61,18 @@ class ScrpitBuilder{
     if (!key_exist('account',$_SESSION)){
       $this->error[$this::CRITICAL_REF]="vous n'ète pas connecté";
     }
+  }
+
+  public function getError(){
+    return $this->error;
+  }
+
+  public function getData(){
+    return $this->data;
+  }
+
+  public function getLanguages(){
+    return $this->languages;
   }
 
 }
