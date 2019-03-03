@@ -1,10 +1,12 @@
 <?php
 
+require_once("Router.php");
+
 class View {
   private $content;
   private $router;
 
-  public function __construct(Routeur $router){
+  public function __construct(Router $router){
     $this->router=$router;
     $this->content=null;
     $this->title=null;
@@ -18,5 +20,6 @@ class View {
 
   public function makeDebugPage($e){
     $this->title = 'Debug';
-    $this->content = '<pre>'.var_export($e,true).'<pre>';
+    $this->content = '<pre>'.var_export($e,true).'</pre>';
   }
+}
