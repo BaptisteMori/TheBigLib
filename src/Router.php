@@ -9,7 +9,8 @@ class Router{
     try{
       $view = new View($this);
       $control = new Controller($view);
-
+      
+      $view->makeHomePage();
 
       $view->render();
     } catch (Exception $e){
