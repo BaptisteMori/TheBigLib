@@ -35,7 +35,7 @@ class View {
                       </ul>
                       <ul>
                         <li><form action=\"index.php\" method=\"post\">
-                          <input type=\"text\" name=\"search\" value=\"\" placeholder=\"Bare de racherche\">
+                          <input type=\"text\" name=\"search\" value=\"\" placeholder=\"Rechercher\">
                           <input type=\"submit\" value=\"rechercher\">
                         </form></li>
                       </ul>
