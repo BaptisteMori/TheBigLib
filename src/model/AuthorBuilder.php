@@ -47,6 +47,14 @@ class AuthorBuilder {
       $this->error[$this::EMAIL_REF]="Format invalde, exemple: aaa@bbb.fr";
     }
   }
+
+  public function getData() {
+    return $this->data;
+  }
+
+  public function getError() {
+    return $this->error;
+  }
 }
 
 ?>

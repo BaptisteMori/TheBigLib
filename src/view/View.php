@@ -2,6 +2,7 @@
 
 require_once("Router.php");
 require_once("model/ScriptBuilder.php");
+require_once("model/AuthorBuilder.php");
 
 
 class View {
@@ -42,10 +43,15 @@ class View {
                         </form></li>
                       </ul>
                       <ul id=\"right\">
-                        <li><a href=\"\">Mon Profil</a></li>
-                        <li><a href=\"\">Connexion</a></li>
-                        <li><a href=\"\">Inscription</a></li>
-                        <li><a href=\"\">À propos</a></li>
+                      ";
+                      if (key_exists("account",$_SESSION)) {
+                        $this->menu .= "<li><a href=\"\">Mon Profil</a></li>
+                                        <li><a href=\"\">Déconnexion</a></li>";
+                      } else {
+                        $this->menu .= "<li><a href=\"\">Connexion</a></li>
+                                        <li><a href=\"\">Inscription</a></li>";
+                      }
+                      $this->menu .= "<li><a href=\"\">À propos</a></li>
                       </ul>
                    </nav>";
   }
@@ -74,10 +80,38 @@ class View {
     $this->content = "
     <form action=\"".$this->router->getUrlSaveScript()."\" method=\"POST\">
       <label>Nom :</label><input type=\"text\" name=\"".$scriptBuilder::NAME_REF."\" value=\"".$name."\">
-      <label>Description :</label><input type=\"textarea\" name=\"".$scriptBuilder::DESCRIPTION_REF."\" value=\"".$description."\">
+      <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\" value=\"".$description."\"></textarea>
       <label>Langage :</label><select name=\"".$scriptBuilder::LANGUAGE_REF."\"> ".$strLanguages."</select>
       <input type=\"submit\" value=\"enregistrer\">
     </form>
+    ";
+  }
+
+  public function makeAuthorCreationPage(AuthorBuilder $authorBuilder) {
+    $data = $authorBuilder->getData();
+    $name="";
+    $password="";
+    $email="";
+    $description=$data[$authorBuilder::DESCRIPTION_REF];
+    if ($data!=null) {
+      if ($data[$authorBuilder::NAME_REF]!="") {
+        $name=$data[$authorBuilder::NAME_REF];
+      }
+      if ($data[$authorBuilder::PASSWORD_REF]!="") {
+        $password=$data[$authorBuilder::PASSWORD_REF];
+      }
+      if ($data[$authorBuilder::EMAIL_REF]!="") {
+        $email=$data[$authorBuilder::EMAIL_REF];
+      }
+    }
+
+    $this->content = "<form action=\"".$this->router->getAuthorCreationUrl()."\"method=\"post\">
+                        <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
+                        <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" /></label>
+                        <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>
+                        <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\" value=\"".$description."\" /></textarea></label>
+                        <input type=\"submit\" value=\"Créer un compte\" />
+                      </form>
     ";
   }
 

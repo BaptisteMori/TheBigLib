@@ -74,3 +74,7 @@ nav input[type=submit] {
   background-color:white;
   color:rgb(50,15,50);
 }
+
+textarea {
+  resize:none;
+}

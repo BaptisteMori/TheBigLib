@@ -17,6 +17,8 @@ class Router{
           $control->newScript();
         }elseif ($_SERVER['PATH_INFO']==='/script/save') {
           $control->saveNewScript($_POST);
+        } else if ($_SERVER['PATH_INFO'] === '/createaccount') {
+          $view->makeAuthorCreationPage(new AuthorBuilder(null));
         }
       }
       $view->render();
@@ -32,5 +34,9 @@ class Router{
 
   public function getUrlSaveScript(){
     return $this->getUrl()."action/save";
+  }
+
+  public function getAuthorCreationUrl() {
+    return $this->getUrl()."createaccount";
   }
 }
