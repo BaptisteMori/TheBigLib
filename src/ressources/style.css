@@ -1,0 +1,30 @@
+main{
+  display: grid;
+  margin: auto;
+  width: 80%;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+header{
+  display: flex;
+}
+
+header ul{
+  display: grid;
+  grid-auto-columns: 1frZ;
+}
+
+header li{
+  list-style-type: none;
+  margin: 0;
+}
+
+header a{
+  text-decoration: none;
+  color: black;
+}
+
+
+article {
+  margin: 0;
+}
