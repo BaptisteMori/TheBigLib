@@ -15,5 +15,5 @@ $scriptStorage= new ScriptStorageMysql($database);
 
 
 $router = new Router();
-$router->main();
+$router->main($scriptStorage);
 ?>

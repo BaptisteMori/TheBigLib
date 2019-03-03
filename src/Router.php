@@ -5,11 +5,11 @@ require_once("control/Controller.php");
 
 
 class Router{
-  public function main(){
+  public function main($scriptStorage){
     try{
       $view = new View($this);
-      $control = new Controller($view);
-      
+      $control = new Controller($view,$scriptStorage);
+
       $view->makeHomePage();
 
       $view->render();

@@ -3,15 +3,17 @@ require_once("model/ScriptStorage.php");
 
 class ScriptStorageMysql implements ScriptStorage{
 
+  private $db;
+
   public function __construct($db){
     $this->db=$db;
-
   }
 
   public function read($name){
-    $req=" SELECT * FROM script WHERE name = ?;";
-    $this->query($req);
-    return $db->fetch(PDO::FETCH_ASSOC);
+    $req=" SELECT * FROM script WHERE name = :name;";
+    $stmt=$this->db->prepare($req);
+    $stmt->execute(array(':name'=>$name));
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
   public function readAll(){

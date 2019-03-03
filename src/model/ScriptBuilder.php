@@ -15,8 +15,9 @@ class ScrpitBuilder{
   private $error;
   private $language;
 
-  function __construct($data){
+  function __construct($data,$scriptStorage){
     $this->data=$data;
+    $this->storage=$scriptStorage;
     $this->error=array();
     $this->languages = array('PHP','PY','HTML','CSS','JS','C','C++','C#','JAVA','PERL','RUBY','KOTLIN');
   }
@@ -40,7 +41,11 @@ class ScrpitBuilder{
       $this->data[$this::NAME_REF]="Votre nom de script est trop cour il doit faire au moins 7 caractères de long";
     }elseif (strlen($this->data[$this::NAME_REF])>150) {
       $this->data[$this::NAME_REF]="Votre nom de script est trop long il doit faire au plus 150 caractères de long";
+    }elseif ($this->storage->read($this->data[$this::Name_REF])!=""){
+      $this->error[$this::NAME_REF]="le nom choisi est déjà pris";
     }
+
+
     if ($this->data[$this::DESCRIPTION_REF]=="") {
       $this->error[$this::DESCRIPTION_REF]="Vous n'avez pas mit de description";
     }elseif (strlen($this->data[$this::DESCRIPTION_REF])<50) {
