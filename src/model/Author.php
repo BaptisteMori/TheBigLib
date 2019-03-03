@@ -16,19 +16,19 @@ class Author {
   }
 
   public function getName() {
-    return $this->name;
+    return htmlspecialchars($this->name,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getPassword() {
-    return $this->password;
+    return htmlspecialchars($this->password,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getEmail() {
-    return $this->email;
+    return htmlspecialchars($this->email,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getDescription() {
-    return $this->description;
+    return htmlspecialchars($this->description,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function setPassword($password) {

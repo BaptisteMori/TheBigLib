@@ -11,10 +11,12 @@ class AuthorBuilder {
 
   private $data;
   private $error;
+  private $storage;
 
-  function __construct($data) {
+  function __construct($data, $authorStorage) {
     $this->data=$data;
     $this->error=array();
+    $this->storage=$authorStorage;
   }
 
   public function createAuthor() {
@@ -28,6 +30,8 @@ class AuthorBuilder {
       $this->error[$this::NAME_REF]="Le nom doit faire au moins 7 caractères";
     } else if(strlen($this->data[$this::NAME_REF])>50) {
       $this->error[$this::NAME_REF]="Le nom est trop long, maximum 50 caractères";
+    } else if ($this->storage->read($this->data[$this::NAME_REF])!=""){
+      $this->error[$this::NAME_REF]="Ce nom n'est pas disponible";
     }
 
     if($this->data[$this::PASSWORD_REF] == "") {

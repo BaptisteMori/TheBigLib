@@ -5,10 +5,10 @@ require_once("control/Controller.php");
 
 
 class Router{
-  public function main($scriptStorage){
+  public function main($scriptStorage,$authorStorage){
     try{
       $view = new View($this);
-      $control = new Controller($view,$scriptStorage);
+      $control = new Controller($view,$scriptStorage,$authorStorage);
 
       if(!key_exists('PATH_INFO',$_SERVER)) {
         $view->makeHomePage();
@@ -18,7 +18,9 @@ class Router{
         }elseif ($_SERVER['PATH_INFO']==='/script/save') {
           $control->saveNewScript($_POST);
         } else if ($_SERVER['PATH_INFO'] === '/createaccount') {
-          $view->makeAuthorCreationPage(new AuthorBuilder(null));
+          $control->newAccount();
+        } else if ($_SERVER['PATH_INFO'] === '/createdaccount') {
+          $control->saveNewAccount($_POST);
         }
       }
       $view->render();
@@ -29,14 +31,18 @@ class Router{
   }
 
   public function getUrl(){
-    return "http://thebiglib/thebiglib.php/";
+    return "http://thebiglib/thebiglib.php";
   }
 
   public function getUrlSaveScript(){
-    return $this->getUrl()."script/save";
+    return $this->getUrl()."/script/save";
   }
 
   public function getAuthorCreationUrl() {
-    return $this->getUrl()."createaccount";
+    return $this->getUrl()."/createaccount";
+  }
+
+  public function getAuthorCreatedUrl() {
+    return $this->getUrl()."/createdaccount";
   }
 }

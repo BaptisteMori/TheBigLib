@@ -33,7 +33,7 @@ class View {
   public function makeMenu($page) {
     $this->menu = "<nav>
                       <ul>
-                        <li><h4><a href=\"\">The BigLib</a></h4></li>
+                        <li><h4><a href=\"".$this->router->getUrl()."\">The BigLib</a></h4></li>
                         <li><a href=\"\">Auteurs</a></li>
                       </ul>
                       <ul>
@@ -49,7 +49,7 @@ class View {
                                         <li><a href=\"\">Déconnexion</a></li>";
                       } else {
                         $this->menu .= "<li><a href=\"\">Connexion</a></li>
-                                        <li><a href=\"\">Inscription</a></li>";
+                                        <li><a href=\"".$this->router->getAuthorCreationUrl()."\">Inscription</a></li>";
                       }
                       $this->menu .= "<li><a href=\"\">À propos</a></li>
                       </ul>
@@ -109,7 +109,7 @@ class View {
       }
     }
 
-    $this->content = "<form action=\"".$this->router->getAuthorCreationUrl()."\"method=\"post\">
+    $this->content = "<form action=\"".$this->router->getAuthorCreatedUrl()."\"method=\"post\">
                         <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" /></label>
                         <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>

@@ -13,7 +13,7 @@ class AuthorStorageMySql implements AuthorStorage {
   public function read($name) {
     $req="SELECT * FROM author WHERE name = :name;";
     $stmt = $this->db->prepare($req);
-    $stmt->execute(array(':name'->$name));
+    $stmt->execute(array(':name'=>$name));
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
@@ -24,11 +24,11 @@ class AuthorStorageMySql implements AuthorStorage {
   }
 
   public function create(Author $author) {
-    $req="INSERT INTO author VALUES (?,?,?,?);";
-    $this->db->prepare($req);
-    return $this->db->execute(array($author->getName();
-                              $author->getPassword();
-                              $author->getEmail();
+    $req="INSERT INTO `author` (`id`,`name`,`password`,`email`,`description`) VALUES (NULL,?,?,?,?);";
+    $prepared = $this->db->prepare($req);
+    return $prepared->execute(array($author->getName(),
+                              $author->getPassword(),
+                              $author->getEmail(),
                               $author->getDescription()));
   }
 }
