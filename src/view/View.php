@@ -24,14 +24,13 @@ class View {
 
   public function makeHomePage(){
     $this->content = "Salut salut";
-    $this->title = "<h1>The BigLib</h1>";
     $this->makeMenu("accueil");
   }
 
   public function makeMenu($page) {
     $this->menu = "<nav>
                       <ul>
-                        <li><a href=\"\">Logo</a></li>
+                        <li><h4><a href=\"\">The BigLib</a></h4></li>
                         <li><a href=\"\">Auteurs</a></li>
                       </ul>
                       <ul>

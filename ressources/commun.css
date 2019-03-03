@@ -14,15 +14,16 @@ header {
   padding-top:0.02em;
 }
 
-header h1 {
-  padding-left:1em;
-  color:white;
+header h4 {
+  padding:0;
+  margin:0;
 }
 
 nav {
   display: grid;
-  grid-template-columns: 1fr 2fr 1.7fr;
+  grid-template-columns: 1.4fr 2fr 2fr;
   grid-column-gap: 1%;
+  padding-bottom:0.3em;
 }
 
 ul {
@@ -44,12 +45,16 @@ li a {
   text-decoration:none;
   margin-right:1em;
   padding:1em;
-  color:#cbc8d0;
+  color:#EDEDED;
 }
 
 li a:hover {
   background-color:rgba(50,50,70,0.5);
-  color:#EDEDED;
+  color:#fafafa;
+}
+
+li a:hover {
+  padding-bottom:1.33em;
 }
 
 main {
