@@ -37,7 +37,7 @@ class View {
                         <li><a href=\"\">Auteurs</a></li>
                       </ul>
                       <ul>
-                        <li><form action=\"index.php\" method=\"post\">
+                        <li><form action=\"thebiglib.php\" method=\"post\">
                           <input type=\"text\" name=\"search\" value=\"\" placeholder=\"Rechercher\">
                           <input type=\"submit\" value=\"rechercher\">
                         </form></li>
