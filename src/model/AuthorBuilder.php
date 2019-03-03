@@ -46,6 +46,12 @@ class AuthorBuilder {
     if(!filter_var($this->data[$this::EMAIL_REF],FILTER_VALIDATE_EMAIL)) {
       $this->error[$this::EMAIL_REF]="Format invalde, exemple: aaa@bbb.fr";
     }
+
+    if (count($this->error) === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public function getData() {

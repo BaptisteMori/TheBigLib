@@ -113,7 +113,7 @@ class View {
                         <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" /></label>
                         <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>
-                        <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\" value=\"".$description."\" /></textarea></label>
+                        <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\"/>".$description."</textarea></label>
                         <input type=\"submit\" value=\"Créer un compte\" />
                       </form>
     ";

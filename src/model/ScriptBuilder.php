@@ -23,7 +23,7 @@ class ScriptBuilder{
   }
 
   public function createScript(){
-    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], $_SESSION['account']->getAuthor());
+    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt");
   }
 
   public function isValid(){
@@ -31,7 +31,7 @@ class ScriptBuilder{
     /*
      * tester le nom pour les caractères spéciaux et les espaces
      */
-    
+
     if($this->data[$this::NAME_REF]!==htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8')){
       $this->error[$this::NAME_REF]="votre nom de srcipt contené des caractères spéciaux, voici une version sans eux";
       $this->data[$this::NAME_REF]=htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
@@ -56,6 +56,11 @@ class ScriptBuilder{
       $this->error[$this::LANGUAGE_REF]="Vous n'avez pas spécifié le langage";
     }elseif (!in_array(strtoupper($this->data[$this::LANGUAGE_REF]),$this->languages)) {
       $this->error[$this::LANGUAGE_REF]="le langage spécifié est inconnus";
+    }
+    if (count($this->error) === 0) {
+      return true;
+    } else {
+      return false;
     }
     /*
     if (!key_exists('account',$_SESSION)){

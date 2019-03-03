@@ -18,7 +18,6 @@ class Controller{
 
   public function saveNewScript(array $data){
     $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
-    
     if($scriptBuilder->isValid()){
       $script=$scriptBuilder->createScript();
       $a=$this->scriptStorage->create($script);

@@ -21,11 +21,11 @@ class ScriptStorageMysql implements ScriptStorage{
   }
 
   public function create(Script $script){
-    $req=" INSERT INTO script VALUES (?,?,?,?,?,?);";
-    $this->db->prepare($req);
-    return $this->db->execute(array($script->getName(),
+    $req=" INSERT INTO `script` (`id`,`name`,`description`,`date`,`language`,`author`,`url`) VALUES (NULL,?,?,?,?,?,?);";
+    $prepared = $this->db->prepare($req);
+    return $prepared->execute(array($script->getName(),
                             $script->getDescription(),
-                            new \DateTime(),
+                            "DateTime",
                             $script->getLanguage(),
                             $script->getAuthor(),
                             $script->getUrl()));
