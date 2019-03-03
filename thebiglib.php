@@ -10,8 +10,8 @@ require_once("model/ScriptStorageMysql.php");
 /*
  * Stockage
  */
-$database=new DataBase();
-$scriptStorage= new ScriptStorageMysql($database);
+$pdo=new DataBase();
+$scriptStorage= new ScriptStorageMysql($pdo->getDB());
 
 
 $router = new Router();

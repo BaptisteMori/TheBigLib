@@ -31,17 +31,17 @@ class ScriptBuilder{
     /*
      * tester le nom pour les caractères spéciaux et les espaces
      */
-
+    
     if($this->data[$this::NAME_REF]!==htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8')){
       $this->error[$this::NAME_REF]="votre nom de srcipt contené des caractères spéciaux, voici une version sans eux";
       $this->data[$this::NAME_REF]=htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
     }elseif($this->data[$this::NAME_REF]==""){
       $this->error[$this::NAME_REF]="Votre nom de script est incomplet";
     }elseif (strlen($this->data[$this::NAME_REF])<7) {
-      $this->data[$this::NAME_REF]="Votre nom de script est trop cour il doit faire au moins 7 caractères de long";
+      $this->error[$this::NAME_REF]="Votre nom de script est trop cour il doit faire au moins 7 caractères de long";
     }elseif (strlen($this->data[$this::NAME_REF])>150) {
-      $this->data[$this::NAME_REF]="Votre nom de script est trop long il doit faire au plus 150 caractères de long";
-    }elseif ($this->storage->read($this->data[$this::Name_REF])!=""){
+      $this->error[$this::NAME_REF]="Votre nom de script est trop long il doit faire au plus 150 caractères de long";
+    }elseif ($this->storage->read($this->data[$this::NAME_REF])!=""){
       $this->error[$this::NAME_REF]="le nom choisi est déjà pris";
     }
 
@@ -49,18 +49,18 @@ class ScriptBuilder{
     if ($this->data[$this::DESCRIPTION_REF]=="") {
       $this->error[$this::DESCRIPTION_REF]="Vous n'avez pas mit de description";
     }elseif (strlen($this->data[$this::DESCRIPTION_REF])<50) {
-      $this->data[$this::NAME_REF]="Votre description est trop courte elle doit faire au moins 50 caractères de long";
+      $this->error[$this::NAME_REF]="Votre description est trop courte elle doit faire au moins 50 caractères de long";
     }
 
     if($this->data[$this::LANGUAGE_REF]==""){
       $this->error[$this::LANGUAGE_REF]="Vous n'avez pas spécifié le langage";
-    }elseif (!in_array(strtoupper($this->data[$this::LANGUAGE_REF]))) {
+    }elseif (!in_array(strtoupper($this->data[$this::LANGUAGE_REF]),$this->languages)) {
       $this->error[$this::LANGUAGE_REF]="le langage spécifié est inconnus";
     }
-
-    if (!key_exist('account',$_SESSION)){
+    /*
+    if (!key_exists('account',$_SESSION)){
       $this->error[$this::CRITICAL_REF]="vous n'ète pas connecté";
-    }
+    }*/
   }
 
   public function getError(){

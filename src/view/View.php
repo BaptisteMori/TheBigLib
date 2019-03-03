@@ -75,12 +75,16 @@ class View {
 
     }
     $strLanguages="";
-    foreach($scriptBuilder->getLanguages() as $value){ $strLanguages.="<option value=\"".$value."\">".$value."</option>"; };
+    foreach($scriptBuilder->getLanguages() as $value){
+      $selected="";
+      if($value===$language){ $selected ="selected";}
+      $strLanguages.="<option value=\"".$value."\" ".$selected.">".$value."</option>";
+    }
 
     $this->content = "
     <form action=\"".$this->router->getUrlSaveScript()."\" method=\"POST\">
       <label>Nom :</label><input type=\"text\" name=\"".$scriptBuilder::NAME_REF."\" value=\"".$name."\">
-      <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\" value=\"".$description."\"></textarea>
+      <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\">".$description."</textarea>
       <label>Langage :</label><select name=\"".$scriptBuilder::LANGUAGE_REF."\"> ".$strLanguages."</select>
       <input type=\"submit\" value=\"enregistrer\">
     </form>

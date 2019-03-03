@@ -33,7 +33,7 @@ class Router{
   }
 
   public function getUrlSaveScript(){
-    return $this->getUrl()."action/save";
+    return $this->getUrl()."script/save";
   }
 
   public function getAuthorCreationUrl() {

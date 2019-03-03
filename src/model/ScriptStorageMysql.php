@@ -10,7 +10,7 @@ class ScriptStorageMysql implements ScriptStorage{
   }
 
   public function read($name){
-    $req=" SELECT * FROM script WHERE name = :name;";
+    $req="SELECT * FROM script WHERE name = :name;";
     $stmt=$this->db->prepare($req);
     $stmt->execute(array(':name'=>$name));
     return $stmt->fetch(PDO::FETCH_ASSOC);
