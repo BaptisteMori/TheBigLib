@@ -8,12 +8,12 @@ class Script {
   private $author;
   private $url;
 
-  public function __construct($name, $description, $language, $author, $url) {
+  public function __construct($name, $description, $language, $author) {
     $this->name=$name;
     $this->description=$description;
     $this->language=$language;
     $this->author=$author;
-    $this->url=$url;
+    $this->url="Script/".$this->name;
   }
 
   public function getName() {
