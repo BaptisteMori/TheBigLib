@@ -12,9 +12,12 @@ class Router{
 
       if(!key_exists('PATH_INFO',$_SERVER)) {
         $view->makeHomePage();
-      }
-      if(key_exists('PATH_INFO',$_SERVER) && $_SERVER['PATH_INFO']==='/save') {
-        $control->newScript();
+      }else{
+        if ($_SERVER['PATH_INFO']==='/script/new'){
+          $control->newScript();
+        }elseif ($_SERVER['PATH_INFO']==='/script/save') {
+          $control->saveNewScript($_POST);
+        }
       }
       $view->render();
     } catch (Exception $e){
@@ -28,6 +31,6 @@ class Router{
   }
 
   public function getUrlSaveScript(){
-    return $this->getUrl()."save";
+    return $this->getUrl()."action/save";
   }
 }
