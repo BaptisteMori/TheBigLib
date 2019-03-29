@@ -21,6 +21,16 @@ class Router{
           $control->newAccount();
         } else if ($_SERVER['PATH_INFO'] === '/createdaccount') {
           $control->saveNewAccount($_POST);
+        } else if ($_SERVER['PATH_INFO'] === '/login') {
+          $control->login();
+        } else if ($_SERVER['PATH_INFO'] === '/login_verification') {
+          $control->loginVerification($_POST);
+        } else if ($_SERVER['PATH_INFO'] === '/logout') {
+          $control->logout();
+        } else if ($_SERVER['PATH_INFO'] === '/myprofile') {
+          $control->profil();
+        } else if ($_SERVER['PATH_INFO'] === '/apropos') {
+          $control->apropos();
         }
       }
       $view->render();
@@ -44,5 +54,25 @@ class Router{
 
   public function getAuthorCreatedUrl() {
     return $this->getUrl()."/createdaccount";
+  }
+
+  public function getConnexionUrl() {
+    return $this->getUrl()."/login";
+  }
+
+  public function getLoginVerificationUrl() {
+    return $this->getUrl()."/login_verification";
+  }
+
+  public function getDeconnexionUrl() {
+    return $this->getUrl()."/logout";
+  }
+
+  public function getProfilUrl() {
+    return $this->getUrl()."/myprofile";
+  }
+
+  public function getAProposUrl() {
+    return $this->getUrl()."/apropos";
   }
 }

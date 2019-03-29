@@ -22,7 +22,8 @@ class Controller{
     if ($authorBuilder->isValid()) {
       $author = $authorBuilder->createAuthor();
       $a = $this->authorStorage->create($author);
-      $this->view->makeDebugPage($a);
+      $_SESSION['account'] = $this->authorStorage->read($data['name']);
+      $this->view->makeProfilePage();
     } else {
       $_SESSION['currentNewAuthor']=$authorBuilder->getData();
       $this->view->makeAuthorCreationPage($authorBuilder);
@@ -43,6 +44,39 @@ class Controller{
       $_SESSION['currentNewScript']=$scriptBuilder->getData();
       $this->view->makeScriptCreationPage($scriptBuilder);
     }
+  }
+
+  public function login() {
+    $this->view->makeLoginPage();
+  }
+
+  public function loginVerification(array $data) {
+    if (key_exists('nom',$data) && key_exists('mdp',$data) && ($data['nom'] !== "")  && ($data['mdp'] !== "")) {
+      $a = $this->authorStorage->read($data['nom']);
+      if ($a) {
+        if (password_verify($data['mdp'],$a['password'])) {
+          $_SESSION['account'] = $a;
+          header('Location: http://thebiglib/thebiglib.php');
+        }
+      }
+    } else {
+      $_SERVER['PATH_INFO'] = '/login';
+      $this->login();
+      header('Location: http://thebiglib/thebiglib.php/login');
+    }
+  }
+
+  public function logout() {
+    unset($_SESSION['account']);
+    header('Location: http://thebiglib/thebiglib.php');
+  }
+
+  public function profil() {
+    $this->view->makeProfilePage();
+  }
+
+  public function apropos() {
+    $this->view->makeAProposPage();
   }
 
 }

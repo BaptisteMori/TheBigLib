@@ -8,11 +8,11 @@ class Author {
   private $description;
 
   public function __construct($name, $password, $email, $description) {
-    $this->name=htmlspecialchars($name);
-    $password=htmlspecialchars($password);
+    $this->name=htmlspecialchars($name,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
+    $password=htmlspecialchars($password,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
     $this->password=password_hash($password, PASSWORD_BCRYPT);
-    $this->email=htmlspecialchars($email);
-    $this->description=htmlspecialchars($description);
+    $this->email=htmlspecialchars($email,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
+    $this->description=htmlspecialchars($description,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function getName() {
@@ -37,11 +37,11 @@ class Author {
   }
 
   public function setEmail($email) {
-    $this->email=htmlspecialchars($email);
+    $this->email=htmlspecialchars($email,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function setDescription($description) {
-    $this->description=htmlspecialchars($description);
+    $this->description=htmlspecialchars($description,ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 }
 

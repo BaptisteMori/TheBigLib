@@ -45,13 +45,13 @@ class View {
                       <ul id=\"right\">
                       ";
                       if (key_exists("account",$_SESSION)) {
-                        $this->menu .= "<li><a href=\"\">Mon Profil</a></li>
-                                        <li><a href=\"\">Déconnexion</a></li>";
+                        $this->menu .= "<li><a href=\"".$this->router->getProfilurl()."\">Mon Profil</a></li>
+                                        <li><a href=\"".$this->router->getDeconnexionUrl()."\">Déconnexion</a></li>";
                       } else {
-                        $this->menu .= "<li><a href=\"\">Connexion</a></li>
+                        $this->menu .= "<li><a href=\"".$this->router->getConnexionUrl()."\">Connexion</a></li>
                                         <li><a href=\"".$this->router->getAuthorCreationUrl()."\">Inscription</a></li>";
                       }
-                      $this->menu .= "<li><a href=\"\">À propos</a></li>
+                      $this->menu .= "<li><a href=\"".$this->router->getAProposUrl()."\">À propos</a></li>
                       </ul>
                    </nav>";
   }
@@ -111,12 +111,30 @@ class View {
 
     $this->content = "<form action=\"".$this->router->getAuthorCreatedUrl()."\"method=\"post\">
                         <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
-                        <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" /></label>
+                        <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" placeholder=\"8 caractères minimum\" /></label>
                         <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>
                         <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\"/>".$description."</textarea></label>
                         <input type=\"submit\" value=\"Créer un compte\" />
                       </form>
     ";
+  }
+
+  public function makeLoginPage() {
+    $this->content = "<form action=\"".$this->router->getLoginVerificationUrl()."\" method=\"post\">
+                        <label>Nom :<input type=\"text\" name=\"nom\" value=\"\"></label>
+                        <label>Mot de passe: <input type=\"password\" name=\"mdp\" value=\"\"/></label>
+                        <input type=\"submit\" value=\"Se Connecter\" />
+                      </form>";
+  }
+
+  public function makeProfilePage() {
+    var_dump($_SESSION['account']);
+    $account = $_SESSION['account'];
+    $this->content = "<article><h3>".$account['name']."</h3></article>";
+  }
+
+  public function makeAProposPage() {
+    $this->content = "<h2>A Propos</h2>";
   }
 
   public function makeDebugPage($e){
