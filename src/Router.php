@@ -31,6 +31,8 @@ class Router{
           $control->profil();
         } else if ($_SERVER['PATH_INFO'] === '/apropos') {
           $control->apropos();
+        } else if ($_SERVER['PATH_INFO'] === '/edit') {
+          $control->editProfile();
         }
       }
       $view->render();
@@ -74,5 +76,9 @@ class Router{
 
   public function getAProposUrl() {
     return $this->getUrl()."/apropos";
+  }
+
+  public function getModifyUrl() {
+    return $this->getUrl()."/edit";
   }
 }
