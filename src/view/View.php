@@ -130,7 +130,26 @@ class View {
   public function makeProfilePage() {
     var_dump($_SESSION['account']);
     $account = $_SESSION['account'];
-    $this->content = "<article><h3>".$account['name']."</h3></article>";
+    $this->content = "<section>
+                        <h2>".$account['name']."</h2>
+                        <p>Adresse mail: ".$account['email']."</p>
+                        <p>Description: <br>".$account['description']."</p>
+                        <a href=\"".$this->router->getModifyUrl()."\">Modifier</a>
+                      </section>
+                      <section id=\"scripts\">
+
+                      </section>";
+  }
+
+  public function makeEditProfilePage() {
+    $a = $_SESSION['account'];
+    $this->content = "<form action=\"".$this->router->getModificationValidationUrl()."\"method=\"post\">
+                        <label>Nom :<input type=\"text\" name=\"name\" value=\"".$a['name']."\" /></label>
+                        <label>Mot de passe :<input type=\"password\" name=\"password\" placeholder=\"8 caractères minimum\" /></label>
+                        <label>Email :<input type=\"email\" name=\"email\" value=\"".$a['email']."\" /></label>
+                        <label>Description :<textarea name=\"description\"/>".$a['description']."</textarea></label>
+                        <input type=\"submit\" value=\"Valider\" />
+                      </form>";
   }
 
   public function makeAProposPage() {

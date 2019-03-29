@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 03 mars 2019 à 09:38
+-- Généré le :  ven. 29 mars 2019 à 21:19
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -32,11 +32,18 @@ DROP TABLE IF EXISTS `author`;
 CREATE TABLE IF NOT EXISTS `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `description` longtext,
-  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `author`
+--
+
+INSERT INTO `author` (`id`, `name`, `password`, `email`, `description`) VALUES
+(10, 'totototo', '$2y$10$UrIVnDJn0RIs0mHVMaCARe274ggw66o6SDNQlkCBGdyK/qSFq8CU2', 'toto@toto.fr', 'salut');
 
 -- --------------------------------------------------------
 
@@ -80,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `script` (
   `author` varchar(50) NOT NULL,
   `url` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

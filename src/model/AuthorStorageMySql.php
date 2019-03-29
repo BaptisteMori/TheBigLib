@@ -24,12 +24,22 @@ class AuthorStorageMySql implements AuthorStorage {
   }
 
   public function create(Author $author) {
-    $req="INSERT INTO `author` (`id`,`name`,`password`,`email`,`description`) VALUES (NULL,?,?,?,?);";
+    $req="INSERT INTO `author` (`name`,`password`,`email`,`description`) VALUES (?,?,?,?);";
     $prepared = $this->db->prepare($req);
     return $prepared->execute(array($author->getName(),
                               $author->getPassword(),
                               $author->getEmail(),
                               $author->getDescription()));
+  }
+
+  public function update(Author $author) {
+    $req = "UPDATE `author` SET `name`=?, `password`=?, `email`=?,`description`=? WHERE name=?;";
+    $prepared = $this->db->prepare($req);
+    return $prepared->execute(array($author->getName(),
+                              $author->getPassword(),
+                              $author->getEmail(),
+                              $author->getDescription(),
+                              $author->getName()));
   }
 }
 

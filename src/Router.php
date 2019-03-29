@@ -23,7 +23,7 @@ class Router{
           $control->saveNewAccount($_POST);
         } else if ($_SERVER['PATH_INFO'] === '/login') {
           $control->login();
-        } else if ($_SERVER['PATH_INFO'] === '/login_verification') {
+        } else if ($_SERVER['PATH_INFO'] === '/loginverification') {
           $control->loginVerification($_POST);
         } else if ($_SERVER['PATH_INFO'] === '/logout') {
           $control->logout();
@@ -33,6 +33,8 @@ class Router{
           $control->apropos();
         } else if ($_SERVER['PATH_INFO'] === '/edit') {
           $control->editProfile();
+        } else if ($_SERVER['PATH_INFO'] === '/modifyaccount') {
+          $control->modifyAccount($_POST);
         }
       }
       $view->render();
@@ -63,7 +65,7 @@ class Router{
   }
 
   public function getLoginVerificationUrl() {
-    return $this->getUrl()."/login_verification";
+    return $this->getUrl()."/loginverification";
   }
 
   public function getDeconnexionUrl() {
@@ -80,5 +82,9 @@ class Router{
 
   public function getModifyUrl() {
     return $this->getUrl()."/edit";
+  }
+
+  public function getModificationValidationUrl() {
+    return $this->getUrl()."/modifyaccount";
   }
 }
