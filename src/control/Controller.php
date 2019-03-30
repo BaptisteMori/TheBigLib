@@ -13,6 +13,13 @@ class Controller{
     $this->authorStorage=$authorStorage;
   }
 
+  public function homePage() {
+    $author = $this->authorStorage->read($_SESSION['account']['id']);
+    $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
+    $account = $authorBuilder->createAuthor();
+    $this->view->makeHomePage($account);
+  }
+
   public function newAccount() {
     $this->view->makeAuthorCreationPage(new AuthorBuilder(null,$this->authorStorage));
   }
@@ -22,7 +29,7 @@ class Controller{
     if ($authorBuilder->isValid()) {
       $author = $authorBuilder->createAuthor();
       $a = $this->authorStorage->create($author);
-      $_SESSION['account'] = $this->authorStorage->read($data['name']);
+      $_SESSION['account'] = $this->authorStorage->readByName($data['name']);
       header('Location: http://thebiglib/thebiglib.php/myprofile');
     } else {
       $_SESSION['currentNewAuthor']=$authorBuilder->getData();
@@ -52,10 +59,19 @@ class Controller{
 
   public function accessVerify() {
     if (key_exists('account',$_SESSION)) {
-      return true;
+      $a = $this->authorStorage->readToken($_SESSION['account']['id']);
+      if ($a === $_SESSION['account']['token']) {
+        return true;
+      }
     } else {
       return false;
     }
+  }
+
+  public function generateAleatoire($longueur=10) {
+    $alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $res = substr(str_shuffle(str_repeat($alphabet,5)),0,$longueur);
+    return $res;
   }
 
   public function loginVerification(array $data) {
@@ -63,7 +79,10 @@ class Controller{
       $a = $this->authorStorage->read($data['nom']);
       if ($a) {
         if (password_verify($data['mdp'],$a['password'])) {
-          $_SESSION['account'] = $a;
+          $id = $a['id'];
+          $token = hash('ripemd256',$id.$this->generateAleatoire());
+          $this->authorStorage->updateToken($id, $token);
+          $_SESSION['account'] = array('id'=>$a['id'],'token'=>$token);
           header('Location: http://thebiglib/thebiglib.php');
         } else {
           $_SERVER['PATH_INFO'] = '/login';
@@ -80,6 +99,7 @@ class Controller{
 
   public function logout() {
     if ($this->accessVerify()) {
+      $this->authorStorage->updateToken($_SESSION['account']['id'],null);
       unset($_SESSION['account']);
       header('Location: http://thebiglib/thebiglib.php');
     } else {
@@ -89,7 +109,10 @@ class Controller{
 
   public function profil() {
     if ($this->accessVerify()) {
-      $this->view->makeProfilePage();
+      $author = $this->authorStorage->read($_SESSION['account']['id']);
+      $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
+      $account = $authorBuilder->createAuthor();
+      $this->view->makeProfilePage($account);
     } else {
       header('Location: http://thebiglib/thebiglib.php/login');
     }
@@ -101,7 +124,10 @@ class Controller{
 
   public function editProfile() {
     if ($this->accessVerify()) {
-      $this->view->makeEditProfilePage();
+      $author = $this->authorStorage->read($_SESSION['account']['id']);
+      $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
+      $account = $authorBuilder->createAuthor();
+      $this->view->makeEditProfilePage($account);
     } else {
       header('Location: http://thebiglib/thebiglib.php/login');
     }

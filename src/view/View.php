@@ -29,10 +29,10 @@ class View {
     include("template.php");
   }
 
-  public function makeHomePage(){
+  public function makeHomePage($account){
     $this->content = "<section><article id=\"login\">";
     if (key_exists('account',$_SESSION)) {
-      $this->content .= "<h3>Bienvenue ".$_SESSION['account']['name']." !</h3>
+      $this->content .= "<h3>Bienvenue ".$account->getName()." !</h3>
                       <a href=\"".$this->router->getProfilUrl()."\">Mon profil</a>
                       </article>";
     } else {
@@ -164,12 +164,11 @@ class View {
                       </form>";
   }
 
-  public function makeProfilePage() {
-    $account = $_SESSION['account'];
+  public function makeProfilePage($account) {
     $this->content = "<section>
-                        <h2>".$account['name']."</h2>
-                        <p>Adresse mail: ".$account['email']."</p>
-                        <p>Description: <br>".$account['description']."</p>
+                        <h2>".$account->getName()."</h2>
+                        <p>Adresse mail: ".$account->getEmail()."</p>
+                        <p>Description: <br>".$account->getDescription()."</p>
                         <a href=\"".$this->router->getModifyUrl()."\">Modifier</a>
                       </section>
                       <section id=\"scripts\">
@@ -177,13 +176,12 @@ class View {
                       </section>";
   }
 
-  public function makeEditProfilePage() {
-    $a = $_SESSION['account'];
+  public function makeEditProfilePage($account) {
     $this->content = "<form action=\"".$this->router->getModificationValidationUrl()."\" method=\"post\">
-                        <label>Nom :<input type=\"text\" name=\"name\" value=\"".$a['name']."\" /></label>
+                        <label>Nom :<input type=\"text\" name=\"name\" value=\"".$account->getName()."\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"password\" placeholder=\"8 caractères minimum\" /></label>
-                        <label>Email :<input type=\"email\" name=\"email\" value=\"".$a['email']."\" /></label>
-                        <label>Description :<textarea name=\"description\">".$a['description']."</textarea></label>
+                        <label>Email :<input type=\"email\" name=\"email\" value=\"".$account->getEmail()."\" /></label>
+                        <label>Description :<textarea name=\"description\">".$account->getDescription()."</textarea></label>
                         <input type=\"submit\" value=\"Valider\" />
                       </form>";
   }
