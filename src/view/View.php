@@ -45,19 +45,21 @@ class View {
               <p>TheBigLib est un site communautaire sur lequel n'importe qui peut déposer ses scripts, sous condition d'être connecté.
               Les scripts peuvent être des méthodes, des classes, des interfaces ou de simples lignes de codes. Le but est que chaque script
               puisse être utilisé librement par n'importe quel visiteur !</p>
+              <a href=\"".$this->router->getAProposUrl()."\">En savoir plus</a>
             </article>
           </section>
-          <aside>
-            <section>
-                  <h3>Les derniers scripts</h3>
-                  <article>plusieurs scripts blablablablabla</article>
-                  <article>plusieurs scripts blablablablabla</article>
-                  <article>plusieurs scripts blablablablabla</article>
-                  <article>plusieurs scripts blablablablabla</article>
-                  <article>plusieurs scripts blablablablabla</article>
-                  <article>plusieurs scripts blablablablabla</article>
-              </section>
-          </aside>";
+
+          <section id=\"scripts\">
+                <h3>Les derniers scripts</h3>
+                <article>plusieurs scripts blablablablabla</article>
+                <article>plusieurs scripts blablablablabla</article>
+                <article>plusieurs scripts blablablablabla</article>
+                <article>plusieurs scripts blablablablabla</article>
+                <article>plusieurs scripts blablablablabla</article>
+                <article>plusieurs scripts blablablablabla</article>
+                <br>
+                <a href=\"\">Tous les scripts</a>
+            </section>";
     $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/accueil.css\">";
   }
 
@@ -140,11 +142,11 @@ class View {
       }
     }
 
-    $this->content = "<form action=\"".$this->router->getAuthorCreatedUrl()."\"method=\"post\">
+    $this->content = "<form action=\"".$this->router->getAuthorCreatedUrl()."\" method=\"post\">
                         <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" placeholder=\"8 caractères minimum\" /></label>
                         <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>
-                        <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\"/>".$description."</textarea></label>
+                        <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\">".$description."</textarea></label>
                         <input type=\"submit\" value=\"Créer un compte\" />
                       </form>
     ";
@@ -156,7 +158,7 @@ class View {
 
   public function makeLoginForm() {
     return "<form action=\"".$this->router->getLoginVerificationUrl()."\" method=\"post\">
-                        <label>Nom :<input type=\"text\" name=\"nom\" value=\"\"></label>
+                        <label>Nom: <input type=\"text\" name=\"nom\" value=\"\"></label>
                         <label>Mot de passe: <input type=\"password\" name=\"mdp\" value=\"\"/></label>
                         <input type=\"submit\" value=\"Se Connecter\" />
                       </form>";
@@ -177,17 +179,34 @@ class View {
 
   public function makeEditProfilePage() {
     $a = $_SESSION['account'];
-    $this->content = "<form action=\"".$this->router->getModificationValidationUrl()."\"method=\"post\">
+    $this->content = "<form action=\"".$this->router->getModificationValidationUrl()."\" method=\"post\">
                         <label>Nom :<input type=\"text\" name=\"name\" value=\"".$a['name']."\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"password\" placeholder=\"8 caractères minimum\" /></label>
                         <label>Email :<input type=\"email\" name=\"email\" value=\"".$a['email']."\" /></label>
-                        <label>Description :<textarea name=\"description\"/>".$a['description']."</textarea></label>
+                        <label>Description :<textarea name=\"description\">".$a['description']."</textarea></label>
                         <input type=\"submit\" value=\"Valider\" />
                       </form>";
   }
 
   public function makeAProposPage() {
-    $this->content = "<h2>A Propos</h2>";
+    $this->content = "<h2>A Propos</h2>
+      Réalisé par
+      <p>21606807</p>
+      <p>21602052</p>
+      <article>
+      <h3>Choix du design</h3>
+      <p>Nous avons voulu réaliser un site avec des couleurs non conventionnelles qui soient vives afin qu'il soit plus accueillant.</p>
+      </article>
+
+      <article>
+      <h3>Choix de modélisation</h3>
+      <p>Nous avons modélisé un script de façon simple: son auteur, son langage, un titre, une description et un fichier qui contient le script.
+      Cela nous semblait être la meilleure façon de représenter un script. Nous avons toutes les informations importantes sans de surplus inutile.
+      Un auteur est un utilisateur inscrit au site.</p>
+      </article>
+    ";
+
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/apropos.css\">";
   }
 
   public function makeDebugPage($e){
