@@ -11,11 +11,13 @@ class View {
   private $content;
   private $title;
   private $menu;
+  private $stylesheet;
 
   public function __construct(Router $router){
     $this->router=$router;
     $this->content=null;
     $this->title=null;
+    $this->stylesheet=null;
     $this->makeMenu("accueil");
   }
 
@@ -23,11 +25,40 @@ class View {
     $content=$this->content;
     $title=$this->title;
     $menu=$this->menu;
+    $stylesheet=$this->stylesheet;
     include("template.php");
   }
 
   public function makeHomePage(){
-    $this->content = "Salut salut";
+    $this->content = "<section><article id=\"login\">";
+    if (key_exists('account',$_SESSION)) {
+      $this->content .= "<h3>Bienvenue ".$_SESSION['account']['name']." !</h3>
+                      <a href=\"".$this->router->getProfilUrl()."\">Mon profil</a>
+                      </article>";
+    } else {
+      $this->content .= $this->makeLoginForm().
+                        "<a href=\"".$this->router->getAuthorCreationUrl()."\">Créer un compte</a>
+                        </article>";
+    }
+    $this->content .= "<article id=\"presentation\">
+              <h3>TheBigLib, c'est quoi ?</h3>
+              <p>TheBigLib est un site communautaire sur lequel n'importe qui peut déposer ses scripts, sous condition d'être connecté.
+              Les scripts peuvent être des méthodes, des classes, des interfaces ou de simples lignes de codes. Le but est que chaque script
+              puisse être utilisé librement par n'importe quel visiteur !</p>
+            </article>
+          </section>
+          <aside>
+            <section>
+                  <h3>Les derniers scripts</h3>
+                  <article>plusieurs scripts blablablablabla</article>
+                  <article>plusieurs scripts blablablablabla</article>
+                  <article>plusieurs scripts blablablablabla</article>
+                  <article>plusieurs scripts blablablablabla</article>
+                  <article>plusieurs scripts blablablablabla</article>
+                  <article>plusieurs scripts blablablablabla</article>
+              </section>
+          </aside>";
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/accueil.css\">";
   }
 
   public function makeMenu($page) {
@@ -120,7 +151,11 @@ class View {
   }
 
   public function makeLoginPage() {
-    $this->content = "<form action=\"".$this->router->getLoginVerificationUrl()."\" method=\"post\">
+    $this->content = $this->makeLoginForm();
+  }
+
+  public function makeLoginForm() {
+    return "<form action=\"".$this->router->getLoginVerificationUrl()."\" method=\"post\">
                         <label>Nom :<input type=\"text\" name=\"nom\" value=\"\"></label>
                         <label>Mot de passe: <input type=\"password\" name=\"mdp\" value=\"\"/></label>
                         <input type=\"submit\" value=\"Se Connecter\" />
@@ -128,7 +163,6 @@ class View {
   }
 
   public function makeProfilePage() {
-    var_dump($_SESSION['account']);
     $account = $_SESSION['account'];
     $this->content = "<section>
                         <h2>".$account['name']."</h2>

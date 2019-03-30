@@ -70,20 +70,3 @@ main {
   width:80%;
   padding:2em;
 }
-
-/*FORMULAIRES*/
-main form {
-  text-align:right;
-  margin-right:46%;
-}
-
-label {
-  display:block;
-  margin:1em;
-}
-
-textarea {
-  resize:none;
-  vertical-align: middle;
-}
-/*FIN FORMULAIRES*/

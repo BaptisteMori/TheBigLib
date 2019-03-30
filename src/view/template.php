@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>The BigLib</title>
     <link rel="stylesheet" href="../ressources/commun.css">
+    <?php echo $stylesheet; ?>
   </head>
   <body>
     <header>

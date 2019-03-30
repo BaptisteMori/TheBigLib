@@ -1,0 +1,19 @@
+main {
+  background-color:red;
+  display:grid;
+  grid-template-columns: 25em 30em;
+  grid-column-gap: 3em;
+}
+
+section {
+  background-color:yellow;
+  padding:1em;
+}
+
+h3 {
+  text-align:center;
+}
+
+#presentation {
+  text-align:justify;
+}

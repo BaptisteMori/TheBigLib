@@ -23,7 +23,7 @@ class Controller{
       $author = $authorBuilder->createAuthor();
       $a = $this->authorStorage->create($author);
       $_SESSION['account'] = $this->authorStorage->read($data['name']);
-      $this->view->makeProfilePage();
+      header('Location: http://thebiglib/thebiglib.php/myprofile');
     } else {
       $_SESSION['currentNewAuthor']=$authorBuilder->getData();
       $this->view->makeAuthorCreationPage($authorBuilder);
