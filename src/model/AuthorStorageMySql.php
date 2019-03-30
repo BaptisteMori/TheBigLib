@@ -17,6 +17,13 @@ class AuthorStorageMySql implements AuthorStorage {
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
+  public function readByName($name) {
+    $req="SELECT * FROM author WHERE name = :name;";
+    $stmt = $this->db->prepare($req);
+    $stmt->execute(array(':name'=>$name));
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
   public function readAll() {
     $req="SELECT * FROM author;";
     $this->query($req);
@@ -49,9 +56,10 @@ class AuthorStorageMySql implements AuthorStorage {
   }
 
   public function readToken($id) {
-    $req = "SELECT `token` FROM `author` WHERE `id`=?;";
-    $prepared = $this->db->prepare($req);
-    return $prepared->execute(array($id));
+    $req = "SELECT token FROM `author` WHERE id=:id;";
+    $stmt = $this->db->prepare($req);
+    $stmt->execute(array(':id'=>$id));
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }
 

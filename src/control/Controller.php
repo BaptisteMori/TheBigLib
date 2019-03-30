@@ -14,7 +14,11 @@ class Controller{
   }
 
   public function homePage() {
-    $author = $this->authorStorage->read($_SESSION['account']['id']);
+    if(key_exists('account',$_SESSION)) {
+        $author = $this->authorStorage->read($_SESSION['account']['id']);
+    } else {
+      $author = null;
+    }
     $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
     $account = $authorBuilder->createAuthor();
     $this->view->makeHomePage($account);
@@ -60,7 +64,7 @@ class Controller{
   public function accessVerify() {
     if (key_exists('account',$_SESSION)) {
       $a = $this->authorStorage->readToken($_SESSION['account']['id']);
-      if ($a === $_SESSION['account']['token']) {
+      if ($a['token'] === $_SESSION['account']['token']) {
         return true;
       }
     } else {
@@ -76,7 +80,7 @@ class Controller{
 
   public function loginVerification(array $data) {
     if (key_exists('nom',$data) && key_exists('mdp',$data) && ($data['nom'] !== "")  && ($data['mdp'] !== "")) {
-      $a = $this->authorStorage->read($data['nom']);
+      $a = $this->authorStorage->readByName($data['nom']);
       if ($a) {
         if (password_verify($data['mdp'],$a['password'])) {
           $id = $a['id'];
