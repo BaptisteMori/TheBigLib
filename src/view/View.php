@@ -68,6 +68,7 @@ class View {
                       <ul>
                         <li><h4><a href=\"".$this->router->getUrl()."\">The BigLib</a></h4></li>
                         <li><a href=\"\">Auteurs</a></li>
+                        <li><a href='".$this->router->getUrlIndexScript()."'>Scripts</a></li>
                       </ul>
                       <ul>
                         <li><form action=\"thebiglib.php\" method=\"post\">
@@ -79,7 +80,8 @@ class View {
                       ";
                       if (key_exists("account",$_SESSION)) {
                         $this->menu .= "<li><a href=\"".$this->router->getProfilurl()."\">Mon Profil</a></li>
-                                        <li><a href=\"".$this->router->getDeconnexionUrl()."\">Déconnexion</a></li>";
+                                        <li><a href=\"".$this->router->getDeconnexionUrl()."\">Déconnexion</a></li>
+                                        <li><a href='".$this->router->getUrlNewScript()."'>Nouveau Script</a></li>";
                       } else {
                         $this->menu .= "<li><a href=\"".$this->router->getConnexionUrl()."\">Connexion</a></li>
                                         <li><a href=\"".$this->router->getAuthorCreationUrl()."\">Inscription</a></li>";

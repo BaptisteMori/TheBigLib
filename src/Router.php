@@ -89,6 +89,10 @@ class Router{
     return $this->getUrl()."/script";
   }
 
+  public function getUrlNewScript(){
+    return $this->getUrlIndexScript()."/new";
+  }
+
   public function getUrlSaveScript(){
     return $this->getUrlIndexScript()."/save";
   }

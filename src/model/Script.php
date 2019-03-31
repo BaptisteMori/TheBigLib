@@ -8,12 +8,13 @@ class Script {
   private $author;
   private $url;
 
-  public function __construct($name, $description, $language, $author) {
+  public function __construct($name, $description, $language, $author,$filename) {
     $this->name=$name;
     $this->description=$description;
     $this->language=$language;
     $this->author=$author;
     $this->url="Script/".$this->name;
+    $this->filename=$filename;
   }
 
   public function getName() {
@@ -34,6 +35,10 @@ class Script {
 
   public function getUrl() {
     return htmlspecialchars($this->url, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
+  }
+
+  public function getFileName() {
+    return htmlspecialchars($this->filename, ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');
   }
 
   public function setName($name) {

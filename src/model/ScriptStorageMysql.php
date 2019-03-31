@@ -1,5 +1,6 @@
 <?php
 require_once("model/ScriptStorage.php");
+require_once("model/ScriptStorageFile.php");
 
 class ScriptStorageMysql implements ScriptStorage{
 
@@ -7,6 +8,7 @@ class ScriptStorageMysql implements ScriptStorage{
 
   public function __construct($db){
     $this->db=$db;
+    $this->storeFilenam=new ScriptStorageFile();
   }
 
   public function read($id){
@@ -24,18 +26,19 @@ class ScriptStorageMysql implements ScriptStorage{
   }
 
   public function create(Script $script){
-    $req=" INSERT INTO `script` (`id`,`name`,`description`,`date`,`language`,`author`,`url`) VALUES (NULL,?,?,?,?,?,?);";
+    $req=" INSERT INTO `script` (`id`,`name`,`description`,`date`,`language`,`author`,`url`,`filename`) VALUES (NULL,?,?,?,?,?,?,?);";
     $prepared = $this->db->prepare($req);
     return $prepared->execute(array($script->getName(),
                             $script->getDescription(),
                             date('Y-m-d H:i:s'),
                             $script->getLanguage(),
                             $script->getAuthor(),
-                            $script->getUrl()));
+                            $script->getUrl()),
+                            $script->getFileName());
   }
 
   public function delete($id){
-    
+
   }
 
 }

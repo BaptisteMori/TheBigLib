@@ -10,6 +10,7 @@ class ScriptBuilder{
   const AUTHOR_REF="author";
   const URL_REF="url";
   const CRITICAL_REF="critique";
+  const FILENAME_REF="filename";
 
   private $data;
   private $error;
@@ -24,7 +25,7 @@ class ScriptBuilder{
   }
 
   public function createScript(){
-    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt");
+    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt",$this->data[$this::FILENAME_REF]);
   }
 
   public function isValid(){
@@ -62,6 +63,10 @@ class ScriptBuilder{
     if (!key_exists('account',$_SESSION)){
       $this->error[$this::CRITICAL_REF]="vous n'ète pas connecté";
     }*/
+  }
+
+  public function setFileName($filename){
+    $this->data[$this::FILENAME_REF]=$filename;
   }
 
   public function getError(){

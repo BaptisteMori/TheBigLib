@@ -3,6 +3,7 @@ require_once("model/script.php");
 require_once("control/Controller.php");
 require_once("model/ScriptBuilder.php");
 require_once("model/AuthorBuilder.php");
+require_once("model/ScriptStorageFile.php");
 
 
 class ScriptController extends Controller{
@@ -12,6 +13,7 @@ class ScriptController extends Controller{
     $this->view = $view;
     $this->scriptStorage=$scriptStorage;
     $this->authorStorage=$authorStorage;
+    $this->storageFile=new ScriptStorageFile();
     //$this->control=new Controller($view,$scriptStorage,$authorStorage);
   }
 
@@ -20,7 +22,9 @@ class ScriptController extends Controller{
    * /script/new
    */
   public function newScript(){
-    $this->view->makeScriptCreationPage(new ScriptBuilder(null,$this->scriptStorage));
+    if ($this->accessVerify()){
+      $this->view->makeScriptCreationEditPage(new ScriptBuilder(null,$this->scriptStorage));
+    }
   }
 
   /*
@@ -28,14 +32,23 @@ class ScriptController extends Controller{
    * /script/save
    */
   public function saveNewScript(array $data){
-    $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
-    if($scriptBuilder->isValid()){
-      $script=$scriptBuilder->createScript();
-      $a=$this->scriptStorage->create($script);
-      $this->view->makeDebugPage($a);
-    }else{
-      $_SESSION['currentNewScript']=$scriptBuilder->getData();
-      $this->view->makeScriptCreationPage($scriptBuilder);
+    if ($this->accessVerify()){
+      $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
+      if($scriptBuilder->isValid()){
+
+        $filename = $this->storageFile->makeName();
+        $this->storageFile->store($filename,$data[ScriptBuilder::FILE_REF]);
+        $scriptBuilder->setFileName($filename);
+
+        $script=$scriptBuilder->createScript();
+        $a=$this->scriptStorage->create($script);
+
+        $this->view->makeShowScriptPage($id);
+
+      }else{
+        $_SESSION['currentNewScript']=$scriptBuilder->getData();
+        $this->view->makeScriptCreationPage($scriptBuilder);
+      }
     }
   }
 
@@ -62,7 +75,7 @@ class ScriptController extends Controller{
       $script=$scriptStorage->read($id);
       $this->view->makeScriptPage($script);
     }else{
-      
+
     }
   }
 
