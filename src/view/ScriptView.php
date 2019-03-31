@@ -54,7 +54,7 @@ class ScriptView {
 
   public function makeConfirmDeletePage($script){
     $this->content="<form method='POST' action='".$this->view->getUrlDeleteComfirm($script->data['id'])."'>
-                      <input type='submit' value='comfirmer'>
+                      <input type='submit' value='confirmer'>
                       <input type='submit' value='annuler'>
                     </form>";
   }

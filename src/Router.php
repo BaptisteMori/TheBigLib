@@ -31,9 +31,9 @@ class Router{
         elseif ($route==='/script'){
           $scriptControl->indexScript();
         }elseif ($route==='/script/new'){
-          $scriptcontrol->newScript();
+          $scriptControl->newScript();
         }elseif ($route==='/script/save') {
-          $scriptcontrol->saveNewScript($_POST);
+          $scriptControl->saveNewScript($_POST);
         }
         // /script/{id}
         elseif (sizeof($splitRoute)>=2 && $splitRoute[0]==='script' && preg_match('/^[0-9]*$/i',$splitRoute[1])){
