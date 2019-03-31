@@ -14,6 +14,7 @@ class ScriptBuilder{
   private $data;
   private $error;
   private $language;
+  private $storage;
 
   function __construct($data,$scriptStorage){
     $this->data=$data;
@@ -27,11 +28,6 @@ class ScriptBuilder{
   }
 
   public function isValid(){
-
-    /*
-     * tester le nom pour les caractères spéciaux et les espaces
-     */
-
     if($this->data[$this::NAME_REF]!==htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8')){
       $this->error[$this::NAME_REF]="votre nom de srcipt contené des caractères spéciaux, voici une version sans eux";
       $this->data[$this::NAME_REF]=htmlspecialchars($this->data[$this::NAME_REF], ENT_QUOTES|ENT_SUBSTITUTE|ENT_HTML5, 'UTF-8');

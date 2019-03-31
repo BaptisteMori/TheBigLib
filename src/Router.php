@@ -1,23 +1,60 @@
 <?php
 
 require_once("view/View.php");
+require_once("view/ScriptView.php");
 require_once("control/Controller.php");
+require_once("control/ScriptController.php");
+
 
 
 class Router{
   public function main($scriptStorage,$authorStorage){
     try{
       $view = new View($this);
+      $scriptView = new ScriptView($this);
       $control = new Controller($view,$scriptStorage,$authorStorage);
+      $scriptControl = new ScriptController($scriptView,$scriptStorage,$authorStorage);
 
       if(!key_exists('PATH_INFO',$_SERVER)) {
-        $view->makeHomePage();
+        $control->homePage();
       }else{
-        if ($_SERVER['PATH_INFO']==='/script/new'){
-          $control->newScript();
-        }elseif ($_SERVER['PATH_INFO']==='/script/save') {
-          $control->saveNewScript($_POST);
-        } else if ($_SERVER['PATH_INFO'] === '/createaccount') {
+        $route=$_SERVER['PATH_INFO'];
+        $splitRoute=explode('/',$route);
+        $a=array_shift($splitRoute);
+
+        if ($route==='/'){
+          $control->homePage();
+        }
+        /*
+         * Route pour les scripts
+         */
+        elseif ($route==='/script'){
+          $scriptControl->indexScript();
+        }elseif ($route==='/script/new'){
+          $scriptcontrol->newScript();
+        }elseif ($route==='/script/save') {
+          $scriptcontrol->saveNewScript($_POST);
+        }
+        // /script/{id}
+        elseif (sizeof($splitRoute)>=2 && $splitRoute[0]==='script' && preg_match('/^[0-9]*$/i',$splitRoute[1])){
+          $scriptControl->showScript($splitRoute[1]);
+        }
+        // /script/{id}/edit
+        elseif (sizeof($splitRoute)>=3 && $splitRoute[0]==='script' && preg_match('/^[0-9]*$/i',$splitRoute[1]) && $splitRoute[0]==='edit'){
+          $scriptControl->editScript($id);
+        }
+        // /script/{id}/delete
+        elseif (sizeof($splitRoute)>=3 && $splitRoute[0]==='script' && preg_match('/^[0-9]*$/i',$splitRoute[1]) && $splitRoute[0]==='delete'){
+          $scriptControl->deleteScript($id);
+        }
+        // /script/{id}/deleteConfirm
+        elseif (sizeof($splitRoute)>=3 && $splitRoute[0]==='script' && preg_match('/^[0-9]*$/i',$splitRoute[1]) && $splitRoute[0]==='deleteComfirm'){
+          $scriptControl->deleteComfirmScript($_POST);
+        }
+        /*
+         * Route pour les Users
+         */
+         else if ($_SERVER['PATH_INFO'] === '/createaccount') {
           $control->newAccount();
         } else if ($_SERVER['PATH_INFO'] === '/createdaccount') {
           $control->saveNewAccount($_POST);
@@ -48,8 +85,24 @@ class Router{
     return "http://thebiglib/thebiglib.php";
   }
 
+  public function getUrlIndexScript(){
+    return $this->getUrl()."/script";
+  }
+
   public function getUrlSaveScript(){
-    return $this->getUrl()."/script/save";
+    return $this->getUrlIndexScript()."/save";
+  }
+
+  public function getUrlShowScript($id){
+    return $this->getUrlIndexScript()."/".$id;
+  }
+
+  public function getUrlDeleteScript($id){
+    return $this->getUrlShowScript($id)."/delete";
+  }
+
+  public function getUrlDeleteComfirm($id){
+    return $this->getUrlDeleteScript($id)."Confirm";
   }
 
   public function getAuthorCreationUrl() {

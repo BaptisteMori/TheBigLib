@@ -9,15 +9,18 @@ class ScriptStorageMysql implements ScriptStorage{
     $this->db=$db;
   }
 
-  public function read($name){
+  public function read($id){
     $req="SELECT * FROM script WHERE name = :name;";
     $stmt=$this->db->prepare($req);
-    $stmt->execute(array(':name'=>$name));
+    $stmt->execute(array(':name'=>$id));
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
   public function readAll(){
-    return "p";
+    $req="SELECT * FROM script;";
+    $stmt=$this->db->prepare($req);
+    $stmt->execute();
+    return $stmt->fetchall(PDO::FETCH_ASSOC);
   }
 
   public function create(Script $script){
@@ -25,10 +28,14 @@ class ScriptStorageMysql implements ScriptStorage{
     $prepared = $this->db->prepare($req);
     return $prepared->execute(array($script->getName(),
                             $script->getDescription(),
-                            "DateTime",
+                            date('Y-m-d H:i:s'),
                             $script->getLanguage(),
                             $script->getAuthor(),
                             $script->getUrl()));
+  }
+
+  public function delete($id){
+    
   }
 
 }
