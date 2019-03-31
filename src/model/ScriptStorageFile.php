@@ -15,7 +15,7 @@ class ScriptStorageFile{
   }
 
   public function makeName($name){
-    $token = hash('ripemd256',$name.$this->generateAleatoire());
+    return hash('ripemd256',$name.$this->generateAleatoire());
   }
 
   public function store($filename,$file){

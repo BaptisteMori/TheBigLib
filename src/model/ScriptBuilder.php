@@ -25,7 +25,7 @@ class ScriptBuilder{
   }
 
   public function createScript(){
-    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt",$this->data[$this::URL_REF]);
+    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], $this->data[$this::AUTHOR_REF],$this->data[$this::URL_REF]);
   }
 
   public function isValid(){

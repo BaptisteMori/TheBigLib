@@ -112,7 +112,7 @@ class View {
       <label>Nom :</label><input type=\"text\" name=\"".$scriptBuilder::NAME_REF."\" value=\"".$name."\">
       <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\">".$description."</textarea>
       <label>Langage :</label><select name=\"".$scriptBuilder::LANGUAGE_REF."\"> ".$strLanguages."</select>
-      <label>Fichier :</label><input type=\"file\" name=\"".$scriptBuilder::FILE_REF."\"> 
+      <label>Fichier :</label><input type=\"file\" name=\"".$scriptBuilder::FILE_REF."\">
       <input type=\"submit\" value=\"enregistrer\">
     </form>
     ";

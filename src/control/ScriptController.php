@@ -31,18 +31,19 @@ class ScriptController extends Controller{
    * save
    * /script/save
    */
-   public function saveNewScript(array $data){
+   public function saveNewScript(array $data,array $file){
      if ($this->accessVerify()){
        $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
 
        if($scriptBuilder->isValid()){
-
          $filename = $this->storageFile->makeName($data[ScriptBuilder::NAME_REF]);
-         if ($data[ScriptBuilder::FILE_REF]['error']===null || $data[ScriptBuilder::FILE_REF]['error']===""){
-           $move=$this->storageFile->store($filename,$data[ScriptBuilder::FILE_REF]);
+
+         if ($file[ScriptBuilder::FILE_REF]['error']==null || $file[ScriptBuilder::FILE_REF]['error']==""){
+
+           $move=$this->storageFile->store($filename,$file[ScriptBuilder::FILE_REF]);
            if ($move){
              $scriptBuilder->setFileName($filename);
-             $scriptBuilder->setFileName($_SESSION['account']['id']);
+             $scriptBuilder->setAuthor($_SESSION['account']['id']);
 
              $script=$scriptBuilder->createScript();
              $a=$this->scriptStorage->create($script);

@@ -33,8 +33,7 @@ class ScriptStorageMysql implements ScriptStorage{
                             date('Y-m-d H:i:s'),
                             $script->getLanguage(),
                             $script->getAuthor(),
-                            $script->getUrl()),
-                            $script->getFileName());
+                            $script->getUrl()));
   }
 
   public function delete($id){
