@@ -10,7 +10,7 @@ class ScriptBuilder{
   const AUTHOR_REF="author";
   const URL_REF="url";
   const CRITICAL_REF="critique";
-  const FILENAME_REF="filename";
+  const FILE_REF="file";
 
   private $data;
   private $error;
@@ -25,7 +25,7 @@ class ScriptBuilder{
   }
 
   public function createScript(){
-    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt",$this->data[$this::FILENAME_REF]);
+    return new Script( $this->data[$this::NAME_REF], $this->data[$this::DESCRIPTION_REF], $this->data[$this::LANGUAGE_REF], "Coucouefrgt",$this->data[$this::URL_REF]);
   }
 
   public function isValid(){
@@ -54,6 +54,8 @@ class ScriptBuilder{
     }elseif (!in_array(strtoupper($this->data[$this::LANGUAGE_REF]),$this->languages)) {
       $this->error[$this::LANGUAGE_REF]="le langage spécifié est inconnus";
     }
+    // var_dump($this->error);
+    // exit();
     if (count($this->error) === 0) {
       return true;
     } else {
@@ -66,7 +68,11 @@ class ScriptBuilder{
   }
 
   public function setFileName($filename){
-    $this->data[$this::FILENAME_REF]=$filename;
+    $this->data[$this::URL_REF]=$filename;
+  }
+
+  public function setAuthor($id){
+    $this->data[$this::AUHTOR_REF]=$id;
   }
 
   public function getError(){

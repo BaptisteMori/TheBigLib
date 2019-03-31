@@ -31,26 +31,33 @@ class ScriptController extends Controller{
    * save
    * /script/save
    */
-  public function saveNewScript(array $data){
-    if ($this->accessVerify()){
-      $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
-      if($scriptBuilder->isValid()){
+   public function saveNewScript(array $data){
+     if ($this->accessVerify()){
+       $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
 
-        $filename = $this->storageFile->makeName();
-        $this->storageFile->store($filename,$data[ScriptBuilder::FILE_REF]);
-        $scriptBuilder->setFileName($filename);
+       if($scriptBuilder->isValid()){
 
-        $script=$scriptBuilder->createScript();
-        $a=$this->scriptStorage->create($script);
+         $filename = $this->storageFile->makeName($data[ScriptBuilder::NAME_REF]);
+         if ($data[ScriptBuilder::FILE_REF]['error']===null || $data[ScriptBuilder::FILE_REF]['error']===""){
+           $move=$this->storageFile->store($filename,$data[ScriptBuilder::FILE_REF]);
+           if ($move){
+             $scriptBuilder->setFileName($filename);
+             $scriptBuilder->setFileName($_SESSION['account']['id']);
 
-        $this->view->makeShowScriptPage($id);
+             $script=$scriptBuilder->createScript();
+             $a=$this->scriptStorage->create($script);
 
-      }else{
-        $_SESSION['currentNewScript']=$scriptBuilder->getData();
-        $this->view->makeScriptCreationPage($scriptBuilder);
-      }
-    }
-  }
+             $this->view->makeShowScriptPage($id);
+           }
+         }else{
+           $this->newScript();
+         }
+       }else{
+         $_SESSION['currentNewScript']=$scriptBuilder->getData();
+         $this->view->makeScriptCreationEditPage($scriptBuilder);
+       }
+     }
+   }
 
   /*
    * afficher tous les scripts

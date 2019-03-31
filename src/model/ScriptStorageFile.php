@@ -2,7 +2,7 @@
 
 class ScriptStorageFile{
 
-  const PATH_REF="../ressources/Scripts";
+  const PATH_REF="../Scripts";
 
   public function __construct(){
 
@@ -15,11 +15,11 @@ class ScriptStorageFile{
   }
 
   public function makeName($name){
-    $token = hash('ripemd256',$id.$this->generateAleatoire());
+    $token = hash('ripemd256',$name.$this->generateAleatoire());
   }
 
   public function store($filename,$file){
-
+    return move_uploaded_file($file['tmp_name'],$filename);
   }
 
   public function delete($filename){
