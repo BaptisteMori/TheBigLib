@@ -1,0 +1,6 @@
+les comptes:
+
+nom: testeur mdp: 123456789
+nom: totototo mdp: azertyuiop
+
+Si il  ya un problème avec la base de donnée, un fichier .sql se trouve dans ressources/SQL
