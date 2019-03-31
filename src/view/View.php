@@ -63,8 +63,8 @@ class View {
     $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/accueil.css\">";
   }
 
-  public function makeScriptCard($sb){
-    $script=$sb->getData();
+  public function makeShowScriptPage($script){
+
     $this->content="<div class='card'>
                     <h1>".$script[ScriptBuilder::NAME_REF]."</h1>
                     <h3>".$script[ScriptBuilder::AUTHOR_REF]."</h3>
@@ -72,17 +72,21 @@ class View {
                     <hr>
                     <p>".$script[ScriptBuilder::DESCRIPTION_REF]."</p>
                     <hr>
-                    <a href='script/".$script["id"]."'>Voir plus</a>
                   </div>";
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../../ressources/commun.css\">";
   }
 
   public function makeIndexPage($scripts){
     foreach ($scripts as $script) {
-      $this->content.=$this->makeScriptCard($script);
+      $this->content.=$this->makeScriptShowBarre($script);
     }
   }
 
-  public function makeScriptCreationEditPage(ScriptBuilder $scriptBuilder){
+  public function makeScriptShowBarre($script){
+    return "bonjour";
+  }
+
+  public function makeScriptCreationEditPage(ScriptBuilder $scriptBuilder,$error=""){
     $name="";
     $description="";
     $language="";
@@ -107,7 +111,7 @@ class View {
       $strLanguages.="<option value=\"".$value."\" ".$selected.">".$value."</option>";
     }
 
-    $this->content = "
+    $this->content = $error."
     <form action=\"".$this->router->getUrlSaveScript()."\" enctype=\"multipart/form-data\" method=\"POST\">
       <label>Nom :</label><input type=\"text\" name=\"".$scriptBuilder::NAME_REF."\" value=\"".$name."\">
       <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\">".$description."</textarea>
@@ -248,5 +252,9 @@ class View {
   public function makeDebugPage($e){
     $this->title = 'Debug';
     $this->content = '<pre>'.var_export($e,true).'</pre>';
+  }
+
+  public function getRouter(){
+    return $this->router;
   }
 }

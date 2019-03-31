@@ -54,8 +54,6 @@ class ScriptBuilder{
     }elseif (!in_array(strtoupper($this->data[$this::LANGUAGE_REF]),$this->languages)) {
       $this->error[$this::LANGUAGE_REF]="le langage spécifié est inconnus";
     }
-    // var_dump($this->error);
-    // exit();
     if (count($this->error) === 0) {
       return true;
     } else {
@@ -67,12 +65,12 @@ class ScriptBuilder{
     }*/
   }
 
-  public function setFileName($filename){
+  public function setUrl($filename){
     $this->data[$this::URL_REF]=$filename;
   }
 
   public function setAuthor($id){
-    $this->data[$this::AUHTOR_REF]=$id;
+    $this->data[$this::AUTHOR_REF]=$id;
   }
 
   public function getError(){

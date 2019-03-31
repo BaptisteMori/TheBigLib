@@ -34,24 +34,22 @@ class ScriptController extends Controller{
    public function saveNewScript(array $data,array $file){
      if ($this->accessVerify()){
        $scriptBuilder=new ScriptBuilder($data,$this->scriptStorage);
-
        if($scriptBuilder->isValid()){
          $filename = $this->storageFile->makeName($data[ScriptBuilder::NAME_REF]);
-
          if ($file[ScriptBuilder::FILE_REF]['error']==null || $file[ScriptBuilder::FILE_REF]['error']==""){
-
            $move=$this->storageFile->store($filename,$file[ScriptBuilder::FILE_REF]);
            if ($move){
-             $scriptBuilder->setFileName($filename);
+             echo "bonjour";
+             $scriptBuilder->setUrl($this->storageFile::PATH_REF.$filename);
              $scriptBuilder->setAuthor($_SESSION['account']['id']);
-
              $script=$scriptBuilder->createScript();
              $a=$this->scriptStorage->create($script);
 
-             $this->view->makeShowScriptPage($id);
+             header('Location: '.$this->view->getRouter()->getUrlShowScript($this->scriptStorage->readByName($data[ScriptBuilder::NAME_REF]))['id']);
            }
+           $this->view->makeScriptCreationEditPage($scriptBuilder,"une Erreur c'est produie lors du déplacement du fichier");
          }else{
-           $this->newScript();
+           $this->view->makeScriptCreationEditPage($scriptBuilder,$file[ScriptBuilder::FILE_REF]['error']);
          }
        }else{
          $_SESSION['currentNewScript']=$scriptBuilder->getData();
@@ -80,8 +78,8 @@ class ScriptController extends Controller{
    */
   public function showScript($id){
     if ($this->accessVerify()){
-      $script=$scriptStorage->read($id);
-      $this->view->makeScriptPage($script);
+      $script=$this->scriptStorage->read($id);
+      $this->view->makeShowScriptPage($script);
     }else{
 
     }

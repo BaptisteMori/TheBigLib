@@ -2,7 +2,7 @@
 
 class ScriptStorageFile{
 
-  const PATH_REF="../Scripts";
+  const PATH_REF="Scripts/";
 
   public function __construct(){
 
@@ -19,7 +19,8 @@ class ScriptStorageFile{
   }
 
   public function store($filename,$file){
-    return move_uploaded_file($file['tmp_name'],$filename);
+    echo $this::PATH_REF.$file['tmp_name'];
+    return move_uploaded_file($file['tmp_name'],$this::PATH_REF.$filename);
   }
 
   public function delete($filename){
