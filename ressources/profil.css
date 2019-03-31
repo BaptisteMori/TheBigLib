@@ -1,7 +1,12 @@
+main {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2em;
+}
+
 #profil {
   padding:1em;
   background-color:rgb(0,162,232);
-  width:40%;
 }
 
 #profil h2 {
@@ -14,4 +19,13 @@
   text-decoration: none;
   color:white;
   background-color:rgb(34,68,102);
+}
+
+#script {
+  padding:0.7em;
+  background-color:rgb(112,146,190);
+}
+
+#script h2 {
+  text-align:center;
 }

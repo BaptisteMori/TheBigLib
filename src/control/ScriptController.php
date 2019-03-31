@@ -45,7 +45,7 @@ class ScriptController extends Controller{
              $script=$scriptBuilder->createScript();
              $a=$this->scriptStorage->create($script);
 
-             header('Location: '.$this->view->getRouter()->getUrlShowScript($this->scriptStorage->readByName($data[ScriptBuilder::NAME_REF]))['id']);
+             header('Location: '.$this->view->getRouter()->getUrlIndexScript());
            }
            $this->view->makeScriptCreationEditPage($scriptBuilder,"une Erreur c'est produie lors du déplacement du fichier");
          }else{
@@ -107,7 +107,7 @@ class ScriptController extends Controller{
         }
       }
     }else{
-      header('Location: '.$this->view->router->getUrlShowScript($id));
+      header('Location: '.$this->view->router->getUrlIndexScript());
     }
   }
 

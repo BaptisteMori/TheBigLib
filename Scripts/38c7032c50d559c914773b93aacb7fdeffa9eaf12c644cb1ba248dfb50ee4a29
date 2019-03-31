@@ -1,0 +1,125 @@
+#Beauchamp Aymeric 21301016
+#Chagneux Dimitri 21606807
+
+#Exercice 1
+#1
+def chiffreCesar(s,k):
+    res=""
+    for i in range(len(s)):
+        res += chr((((ord(s[i])+k)-ord("a"))%26)+ord("a"))
+    return res
+
+
+#2
+def dechiffreCesar(c,k):
+    res = ""
+    for i in range(len(c)):
+        res += chr((((ord(c[i])-k)-ord("a"))%26)+ord("a"))
+    return res
+
+
+
+c=chiffreCesar("salut",2)
+#print(c)
+d=dechiffreCesar(c,2)
+#print(d)
+
+
+#3
+m="abcdefghijklmnopqrstuvwxyz"
+c2 = chiffreCesar(m,10)
+#print(c2)
+
+
+#4
+def calculOccurencesLettres(c):
+    res = {}
+    for i in c:
+        if not(i in res):
+            res[i]= 0
+        res[i] += 1
+    return res
+
+d = calculOccurencesLettres(m)
+#print(d)
+
+
+#5
+def calculOccurencesBigrammes(c):
+    res = {}
+    for i in range(1,len(c)):
+        temp = c[i-1]+c[i]
+        if not(temp in res):
+            res[temp] = 0
+        res[temp] += 1
+    return res
+
+
+b = calculOccurencesBigrammes(m)
+#print(b)
+
+chiffre = "qtslyjruxojrjxznxhtzhmjijgtssjmjzwjufwktnxfujnsjrfgtzlnjjyjnsyjrjxdjzcxjkjwrfnjsyxnanyjvzjojsfafnxufxqjyjruxijrjinwjojrjstwxjyzsjijrnmjzwjfuwjxqfujsxjjvznqjyfnyyjruxijhmjwhmjwqjxtrrjnqrjajnqqfnyojatzqfnxutxjwqjatqzrjvzjojhwtdfnxfatnwifsxqjxrfnsxjyxtzkkqjwrfqzrnjwj"
+#6
+#1ere etape: calcul d'occurences
+oLettres = calculOccurencesLettres(chiffre)
+oBigrammes = calculOccurencesBigrammes(chiffre)
+#print(oLettres)
+#on remarque que l'occurence la plus élevée est pour la lettre j, donc on
+#peut penser que j correspond à e
+#print(oBigrammes)
+#2eme étape: en utilisant dechiffreCesar
+dechiffre = dechiffreCesar(chiffre,abs(ord("e")-ord("j")))
+#print(dechiffre)
+
+#2eme méthode: brute force
+for i in range(26):
+    dechiffre = dechiffreCesar(chiffre,i)
+    #print(str(i) + " " + dechiffre + "\n")
+
+#Exercice 2
+#1
+p1=[1,0,1,1,0,0,1,0,0,1]
+p2=[0,0,1]
+def LFSR(c,pl,l):
+    new_bit = 0
+    cpt=0
+    key = []
+    for clock in range(l):
+        key += [c[-1]]
+        for i in range(1,len(c)):
+            new_bit = (new_bit + pl[i]*c[-(i-1)])%2
+            c[-i]=c[-(i+1)]
+        c[0]=new_bit
+    return key
+
+#print(LFSR([1,0,0,1,0,0,1,0,0,1],p1,len([1,0,0,1,0,0,1,0,0,1]))
+#LFSR([0,0,1],p2,len([0,0,1])
+#pour le 2eme, on tombe dans une boucle infinie qui ne renvoi que des 0
+
+def cryptLFSR(c,pl, msg):
+    key=LFSR(c,pl,len(msg))
+    msgc = []
+    for i in range(len(msg)):
+        msgc.append((msg[i]+key[i])%2)
+    return msgc
+
+def decryptLFSR(c,pl,msgc):
+    return cryptLFSR(c,pl,msgc)
+
+pl = [0,0,1,1]
+
+msgc = cryptLFSR([1,1,0,1],pl,[1,0,1,1,0,0,0,1])
+#print(msgc)
+#print(decryptLFSR([1,1,0,1],pl,msgc))
+
+#Mots
+c = [0,0,0,0,0,1,1,1,1,0,0,1,0,0,0]
+#1 le message clair est formé de 3 lettres (len(c)/5)
+suite = decryptLFSR([1,1,0,1],pl,c)
+print("suite: ",suite)
+
+#2 on obtient [1,0,1,1,1,1,0,0,1,1,1,1,1,1,0] comme suite
+
+#3 le message clair est donc 10111 10011 11110 soit "WSC" sauf que lorsqu'on recrypte "WSC":
+cryptwsc = cryptLFSR([1,1,0,1],pl,suite)
+print("crypt: ",cryptwsc)

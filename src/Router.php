@@ -8,22 +8,25 @@ require_once("control/ScriptController.php");
 
 
 class Router{
+
+  private $control;
+
   public function main($scriptStorage,$authorStorage){
     try{
       $view = new View($this);
       $scriptView = new ScriptView($this);
-      $control = new Controller($view,$scriptStorage,$authorStorage);
+      $this->control = new Controller($view,$scriptStorage,$authorStorage);
       $scriptControl = new ScriptController($view,$scriptStorage,$authorStorage);
 
       if(!key_exists('PATH_INFO',$_SERVER)) {
-        $control->homePage();
+        $this->control->homePage();
       }else{
         $route=$_SERVER['PATH_INFO'];
         $splitRoute=explode('/',$route);
         $a=array_shift($splitRoute);
 
         if ($route==='/'){
-          $control->homePage();
+          $this->control->homePage();
         }
         /*
          * Route pour les scripts
@@ -55,23 +58,23 @@ class Router{
          * Route pour les Users
          */
          else if ($_SERVER['PATH_INFO'] === '/createaccount') {
-          $control->newAccount();
+          $this->control->newAccount();
         } else if ($_SERVER['PATH_INFO'] === '/createdaccount') {
-          $control->saveNewAccount($_POST);
+          $this->control->saveNewAccount($_POST);
         } else if ($_SERVER['PATH_INFO'] === '/login') {
-          $control->login();
+          $this->control->login();
         } else if ($_SERVER['PATH_INFO'] === '/loginverification') {
-          $control->loginVerification($_POST);
+          $this->control->loginVerification($_POST);
         } else if ($_SERVER['PATH_INFO'] === '/logout') {
-          $control->logout();
+          $this->control->logout();
         } else if ($_SERVER['PATH_INFO'] === '/myprofile') {
-          $control->profil();
+          $this->control->profil();
         } else if ($_SERVER['PATH_INFO'] === '/apropos') {
-          $control->apropos();
+          $this->control->apropos();
         } else if ($_SERVER['PATH_INFO'] === '/edit') {
-          $control->editProfile();
+          $this->control->editProfile();
         } else if ($_SERVER['PATH_INFO'] === '/modifyaccount') {
-          $control->modifyAccount($_POST);
+          $this->control->modifyAccount($_POST);
         }
       }
       $view->render();
@@ -79,6 +82,10 @@ class Router{
       $view->makeDebugPage($e);
       $view->render();
     }
+  }
+
+  public function getController() {
+    return $this->control;
   }
 
   public function getUrl(){

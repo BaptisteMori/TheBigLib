@@ -87,3 +87,8 @@ textarea {
   vertical-align: middle;
 }
 /*FIN FORMULAIRES*/
+
+#scripts {
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

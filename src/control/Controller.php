@@ -22,7 +22,12 @@ class Controller{
     }
     $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
     $account = $authorBuilder->createAuthor();
-    $this->view->makeHomePage($account);
+    $scripts = $this->scriptStorage->readAll();
+    $tabScript = array();
+    for ($i=0; $i < sizeof($scripts); $i++) {
+      $tabScript[$i]=new ScriptBuilder($scripts[$i],$this->scriptStorage);
+    }
+    $this->view->makeHomePage($account,$tabScript);
   }
 
   public function newAccount() {
@@ -101,7 +106,14 @@ class Controller{
       $author = $this->authorStorage->read($_SESSION['account']['id']);
       $authorBuilder = new AuthorBuilder($author,$this->authorStorage);
       $account = $authorBuilder->createAuthor();
-      $this->view->makeProfilePage($account);
+      $scripts = $this->scriptStorage->readAll();
+      $tabScript = array();
+      for ($i=0; $i < sizeof($scripts); $i++) {
+        if ($scripts[$i]['author'] === $author['id']) {
+          $tabScript[$i]=new ScriptBuilder($scripts[$i],$this->scriptStorage);
+        }
+      }
+      $this->view->makeProfilePage($account,$tabScript);
     } else {
       header('Location: http://thebiglib/thebiglib.php/login');
     }
@@ -132,6 +144,10 @@ class Controller{
       $this->authorStorage->updateWithPassword($author);
     }
     header('Location: http://thebiglib/thebiglib.php/myprofile');
+  }
+
+  public function getAuthorStorage() {
+    return $this->authorStorage;
   }
 
 }

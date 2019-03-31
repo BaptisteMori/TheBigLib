@@ -29,7 +29,7 @@ class View {
     include("template.php");
   }
 
-  public function makeHomePage($account){
+  public function makeHomePage($account,$scripts){
     $this->content = "<section><article id=\"login\">";
     if (key_exists('account',$_SESSION)) {
       $this->content .= "<h3>Bienvenue ".$account->getName()." !</h3>
@@ -49,16 +49,17 @@ class View {
             </article>
           </section>
 
-          <section id=\"scripts\">
+          <section id=\"script\">
                 <h3>Les derniers scripts</h3>
-                <article>plusieurs scripts blablablablabla</article>
-                <article>plusieurs scripts blablablablabla</article>
-                <article>plusieurs scripts blablablablabla</article>
-                <article>plusieurs scripts blablablablabla</article>
-                <article>plusieurs scripts blablablablabla</article>
-                <article>plusieurs scripts blablablablabla</article>
+                <article id=\"scripts\">
+                ";
+      foreach($scripts as $script) {
+        $this->content.=$this->makeScriptShowBarre($script);
+      }
+      $this->content .="
+                </article>
                 <br>
-                <a href=\"\">Tous les scripts</a>
+                <a href=\"".$this->router->getUrlIndexScript()."\">Tous les scripts</a>
             </section>";
     $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/accueil.css\">";
   }
@@ -77,13 +78,18 @@ class View {
   }
 
   public function makeIndexPage($scripts){
+    $this->content = "<article id=\"scripts\">";
     foreach ($scripts as $script) {
       $this->content.=$this->makeScriptShowBarre($script);
     }
+    $this->content .= "</article>";
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../../ressources/commun.css\">";
   }
 
   public function makeScriptShowBarre($script){
-    return "bonjour";
+    $script = $script->createScript();
+    $author = $this->router->getController()->getAuthorStorage()->read($script->getAuthor());
+    return "<p>".$script->getLanguage()."</p><p>".$author['name']."</p><p>".$script->getName()."</p>";
   }
 
   public function makeScriptCreationEditPage(ScriptBuilder $scriptBuilder,$error=""){
@@ -129,17 +135,19 @@ class View {
                       <input type='submit' value='confirmer'>
                       <input type='submit' value='annuler'>
                     </form>";
+
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../../ressources/commun.css\">";
   }
 
   public function makeEditPage(Script $script){
     $this->content="<section>".$this->makeScriptForm($script)."</section>";
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../../ressources/commun.css\">";
   }
 
   public function makeMenu($page) {
     $this->menu = "<nav>
                       <ul>
                         <li><h4><a href=\"".$this->router->getUrl()."\">The BigLib</a></h4></li>
-                        <li><a href=\"\">Auteurs</a></li>
                         <li><a href='".$this->router->getUrlIndexScript()."'>Scripts</a></li>
                       </ul>
                       <ul>
@@ -204,16 +212,24 @@ class View {
                       </form>";
   }
 
-  public function makeProfilePage($account) {
+  public function makeProfilePage($account,$scripts) {
     $this->content = "<section id=\"profil\">
                         <h2>".$account->getName()."</h2>
                         <p>Adresse mail: ".$account->getEmail()."</p>
                         <p>Description: <br>".$account->getDescription()."</p>
                         <a href=\"".$this->router->getModifyUrl()."\">Modifier</a>
                       </section>
-                      <section id=\"scripts\">
 
-                      </section>";
+                      <section id=\"script\">
+                      <h2>Mes Scripts</h2>
+                      <article id=\"scripts\">
+                      ";
+
+    foreach($scripts as $script) {
+      $this->content.=$this->makeScriptShowBarre($script);
+    }
+
+    $this->content .= "</article></section>";
 
     $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/profil.css\">";
   }
