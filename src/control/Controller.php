@@ -138,11 +138,14 @@ class Controller{
   }
 
   public function modifyAccount(array $data) {
-    $a = $this->authorStorage->read($data['name']);
+    $a = $this->authorStorage->read($_SESSION['account']['id']);
     $this->authorBuilder = new AuthorBuilder($data, $this->authorStorage);
     $author = $this->authorBuilder->createAuthor();
-    $this->authorStorage->update($author);
-    $_SESSION['account'] = $this->authorStorage->read($data['name']);
+    if ($data['password'] == "") {
+      $this->authorStorage->update($author);
+    } else {
+      $this->authorStorage->updateWithPassword($author);
+    }
     header('Location: http://thebiglib/thebiglib.php/myprofile');
   }
 

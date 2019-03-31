@@ -89,41 +89,6 @@ class View {
                    </nav>";
   }
 
-  public function makeScriptCreationPage(ScriptBuilder $scriptBuilder){
-    $name="";
-    $description="";
-    $language="";
-    if ($scriptBuilder->getData()!=null){
-      if($scriptBuilder->getData()[$scriptBuilder::NAME_REF]!=""){
-        $name=$scriptBuilder->getData()[$scriptBuilder::NAME_REF];
-      }
-
-      if($scriptBuilder->getData()[$scriptBuilder::DESCRIPTION_REF]!=""){
-        $description=$scriptBuilder->getData()[$scriptBuilder::DESCRIPTION_REF];
-      }
-
-      if($scriptBuilder->getData()[$scriptBuilder::LANGUAGE_REF]!=""){
-        $language=$scriptBuilder->getData()[$scriptBuilder::LANGUAGE_REF];
-      }
-
-    }
-    $strLanguages="";
-    foreach($scriptBuilder->getLanguages() as $value){
-      $selected="";
-      if($value===$language){ $selected ="selected";}
-      $strLanguages.="<option value=\"".$value."\" ".$selected.">".$value."</option>";
-    }
-
-    $this->content = "
-    <form action=\"".$this->router->getUrlSaveScript()."\" method=\"POST\">
-      <label>Nom :</label><input type=\"text\" name=\"".$scriptBuilder::NAME_REF."\" value=\"".$name."\">
-      <label>Description :</label><textarea name=\"".$scriptBuilder::DESCRIPTION_REF."\">".$description."</textarea>
-      <label>Langage :</label><select name=\"".$scriptBuilder::LANGUAGE_REF."\"> ".$strLanguages."</select>
-      <input type=\"submit\" value=\"enregistrer\">
-    </form>
-    ";
-  }
-
   public function makeAuthorCreationPage(AuthorBuilder $authorBuilder) {
     $data = $authorBuilder->getData();
     $name="";

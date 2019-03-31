@@ -39,11 +39,20 @@ class AuthorStorageMySql implements AuthorStorage {
                               $author->getDescription()));
   }
 
-  public function update(Author $author) {
+  public function updateWithPassword(Author $author) {
     $req = "UPDATE `author` SET `name`=?, `password`=?, `email`=?,`description`=? WHERE name=?;";
     $prepared = $this->db->prepare($req);
     return $prepared->execute(array($author->getName(),
                               $author->getPassword(),
+                              $author->getEmail(),
+                              $author->getDescription(),
+                              $author->getName()));
+  }
+
+  public function update(Author $author) {
+    $req = "UPDATE `author` SET `name`=?, `email`=?,`description`=? WHERE name=?;";
+    $prepared = $this->db->prepare($req);
+    return $prepared->execute(array($author->getName(),
                               $author->getEmail(),
                               $author->getDescription(),
                               $author->getName()));
