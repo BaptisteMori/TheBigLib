@@ -13,7 +13,7 @@ class Router{
       $view = new View($this);
       $scriptView = new ScriptView($this);
       $control = new Controller($view,$scriptStorage,$authorStorage);
-      $scriptControl = new ScriptController($scriptView,$scriptStorage,$authorStorage);
+      $scriptControl = new ScriptController($view,$scriptStorage,$authorStorage);
 
       if(!key_exists('PATH_INFO',$_SERVER)) {
         $control->homePage();

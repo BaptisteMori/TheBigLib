@@ -17,7 +17,7 @@ header h4 {
 
 nav {
   display: grid;
-  grid-template-columns: 1.4fr 2fr 2fr;
+  grid-template-columns: 1.4fr 1.2fr 2fr;
   grid-column-gap: 1%;
   padding-bottom:0.3em;
 }
@@ -70,3 +70,20 @@ main {
   width:80%;
   padding:2em;
 }
+
+/*FORMULAIRES*/
+main form {
+  text-align:right;
+  margin-right:46%;
+}
+
+label {
+  display:block;
+  margin:1em;
+}
+
+textarea {
+  resize:none;
+  vertical-align: middle;
+}
+/*FIN FORMULAIRES*/

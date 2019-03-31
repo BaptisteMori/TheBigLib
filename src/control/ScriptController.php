@@ -9,7 +9,7 @@ require_once("model/ScriptStorageFile.php");
 class ScriptController extends Controller{
   private $view;
 
-  public function __construct(ScriptView $view,$scriptStorage,$authorStorage){
+  public function __construct($view,$scriptStorage,$authorStorage){
     $this->view = $view;
     $this->scriptStorage=$scriptStorage;
     $this->authorStorage=$authorStorage;
