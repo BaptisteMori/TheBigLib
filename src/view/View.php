@@ -143,7 +143,7 @@ class View {
     }
 
     $this->content = "<form action=\"".$this->router->getAuthorCreatedUrl()."\" method=\"post\">
-                        <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" /></label>
+                        <label>Nom :<input type=\"text\" name=\"".$authorBuilder::NAME_REF."\" value=\"".$name."\" placeholder=\"6 caractères minimum\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"".$authorBuilder::PASSWORD_REF."\" value=\"".$password."\" placeholder=\"8 caractères minimum\" /></label>
                         <label>Email :<input type=\"email\" name=\"".$authorBuilder::EMAIL_REF."\" value=\"".$email."\" /></label>
                         <label>Description :<textarea name=\"".$authorBuilder::DESCRIPTION_REF."\">".$description."</textarea></label>
@@ -165,7 +165,7 @@ class View {
   }
 
   public function makeProfilePage($account) {
-    $this->content = "<section>
+    $this->content = "<section id=\"profil\">
                         <h2>".$account->getName()."</h2>
                         <p>Adresse mail: ".$account->getEmail()."</p>
                         <p>Description: <br>".$account->getDescription()."</p>
@@ -174,11 +174,13 @@ class View {
                       <section id=\"scripts\">
 
                       </section>";
+
+    $this->stylesheet = "<link rel=\"stylesheet\" href=\"../ressources/profil.css\">";
   }
 
   public function makeEditProfilePage($account) {
     $this->content = "<form action=\"".$this->router->getModificationValidationUrl()."\" method=\"post\">
-                        <label>Nom :<input type=\"text\" name=\"name\" value=\"".$account->getName()."\" /></label>
+                        <label>Nom :<input type=\"text\" name=\"name\" value=\"".$account->getName()."\" placeholder=\"6 caractères minimum\" /></label>
                         <label>Mot de passe :<input type=\"password\" name=\"password\" placeholder=\"8 caractères minimum\" /></label>
                         <label>Email :<input type=\"email\" name=\"email\" value=\"".$account->getEmail()."\" /></label>
                         <label>Description :<textarea name=\"description\">".$account->getDescription()."</textarea></label>
