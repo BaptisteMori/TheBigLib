@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 29 mars 2019 à 21:19
+-- Généré le :  Dim 31 mars 2019 à 12:18
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -35,15 +35,17 @@ CREATE TABLE IF NOT EXISTS `author` (
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `description` longtext,
+  `token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `author`
 --
 
-INSERT INTO `author` (`id`, `name`, `password`, `email`, `description`) VALUES
-(10, 'totototo', '$2y$10$UrIVnDJn0RIs0mHVMaCARe274ggw66o6SDNQlkCBGdyK/qSFq8CU2', 'toto@toto.fr', 'salut');
+INSERT INTO `author` (`id`, `name`, `password`, `email`, `description`, `token`) VALUES
+(11, 'testeur', '$2y$10$fT3jq8.fqgvVQZry24yHAeorA4HDxgP.5Vwd5vAr1LHtoYMcMLBR2', 'test@test.com', 'testeur professionnel de test professionnels', NULL),
+(21, 'totototo', '$2y$10$f3MYFTvm5R600/ZG8iXI0uSKZR0br9T9r99LuTZ/UjseBvcLe0alm', 'toto@toto.fr', 'salut', NULL);
 
 -- --------------------------------------------------------
 
